@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="white-slate">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduMonitor — Virtual Classroom Monitoring</title>
+  <meta name="description" content="Real-time student engagement monitoring for virtual classrooms. Track attendance, focus, participation, and engagement scores.">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Code+Pro:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+
+  <!-- Instant White Slate Theme Init -->
+  <script>
+    document.documentElement.setAttribute('data-theme', 'white-slate');
+    document.documentElement.classList.remove('dark');
+  </script>
+</head>
+<body>
+
+  <!-- Ambient Floating Mesh Orbs -->
+  <div class="ambient-orb ambient-orb--1"></div>
+  <div class="ambient-orb ambient-orb--2"></div>
+  <div class="ambient-orb ambient-orb--3"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TOAST CONTAINER
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       AUTH PAGE ($5M Split-Showcase Experience)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="auth-page" class="auth-page">
+    <div class="auth-container">
+      
+      <!-- Left Showcase Pane -->
+      <div class="auth-hero-pane">
+        <div>
+          <div class="d-flex align-center justify-between mb-sm" style="flex-wrap:wrap; gap:8px;">
+            <div class="auth-badge-pill">
+              <span class="status-dot-pulse"></span>
+              Enterprise Classroom AI
+            </div>
+          </div>
+
+          <h1 class="auth-hero-title">
+            Autonomous Telemetry for <span>Modern Education</span>
+          </h1>
+          <p class="auth-hero-desc">
+            Empower educators with multi-modal student engagement scoring, sub-second WebRTC mesh video, and privacy-preserving vision telemetry.
+          </p>
+
+          <div class="hero-features">
+            <div class="hero-feature-pill">
+              <div class="hero-feature-icon" style="background:rgba(var(--color-primary-rgb),0.15); color:var(--color-primary-hi)">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <div>
+                <div class="hero-feature-title">Real-Time Attention Tracking</div>
+                <div class="hero-feature-sub">Tab switches, active window focus & inactivity alerts</div>
+              </div>
+            </div>
+
+            <div class="hero-feature-pill">
+              <div class="hero-feature-icon" style="background:rgba(16,185,129,0.15); color:var(--color-success)">
+                <i class="fas fa-shield-virus"></i>
+              </div>
+              <div>
+                <div class="hero-feature-title">Privacy-Preserving Vision</div>
+                <div class="hero-feature-sub">On-device opt-in face presence with zero video recording</div>
+              </div>
+            </div>
+
+            <div class="hero-feature-pill">
+              <div class="hero-feature-icon" style="background:rgba(6,182,212,0.15); color:var(--color-cyan)">
+                <i class="fas fa-chart-pie"></i>
+              </div>
+              <div>
+                <div class="hero-feature-title">Unified Engagement Analytics</div>
+                <div class="hero-feature-sub">Multi-dimensional scoring: focus, participation, attendance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-footer-note">
+          <div class="d-flex align-center gap-xs">
+            <i class="fas fa-shield-alt text-primary"></i>
+            <span>Google Cloud Firestore Live • Enterprise Grade</span>
+          </div>
+          <span style="opacity:0.6">v2.5 Luxury</span>
+        </div>
+      </div>
+
+      <!-- Right Sign-In / Register Card -->
+      <div class="auth-card">
+        <div class="d-flex align-center gap-sm mb-xs">
+          <div class="header__logo-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="auth-card__title">EduMonitor</div>
+        </div>
+        <div class="auth-card__subtitle">Enter your institutional credentials or select a sandbox demo</div>
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-target="login">Sign In</button>
+          <button class="auth-tab" data-target="register">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input class="form-input" id="login-email" type="email" placeholder="name@institution.edu" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input class="form-input" id="login-password" type="password" placeholder="••••••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">
+            <span>Sign In to Workspace</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+
+          <!-- 1-Click Interactive Persona Sandbox -->
+          <div class="persona-hub">
+            <div class="persona-hub__title">1-Click Sandbox Demo Switcher</div>
+            <div class="persona-grid">
+              <div class="persona-card" onclick="quickLogin('teacher@example.com', 'password123')" title="Sign in as Teacher">
+                <div class="persona-card__avatar" style="background:rgba(var(--color-primary-rgb),0.2); color:var(--color-primary-hi)">
+                  <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="persona-card__role">Teacher</div>
+                <div class="persona-card__name">Prof. Sarah</div>
+              </div>
+              <div class="persona-card" onclick="quickLogin('student@example.com', 'password123')" title="Sign in as Student">
+                <div class="persona-card__avatar" style="background:rgba(16,185,129,0.2); color:var(--color-success)">
+                  <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="persona-card__role">Student</div>
+                <div class="persona-card__name">Alex Rivera</div>
+              </div>
+              <div class="persona-card" onclick="quickLogin('admin@example.com', 'password123')" title="Sign in as Administrator">
+                <div class="persona-card__avatar" style="background:rgba(245,158,11,0.2); color:var(--color-warning)">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="persona-card__role">Admin</div>
+                <div class="persona-card__name">System Admin</div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="hidden">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name</label>
+            <input class="form-input" id="reg-name" type="text" placeholder="Dr. John Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Institutional Email</label>
+            <input class="form-input" id="reg-email" type="email" placeholder="you@university.edu" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input class="form-input" id="reg-password" type="password" placeholder="Min 6 characters" minlength="6" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-role">Account Role</label>
+            <select class="form-select" id="reg-role">
+              <option value="student">Student Account</option>
+              <option value="teacher">Educator / Teacher Account</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">
+            <span>Create Workspace Account</span>
+            <i class="fas fa-user-plus"></i>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       APP SHELL (shown after login)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="app-shell" class="hidden">
+
+    <!-- ── Header ─────────────────────────────────────────────────── -->
+    <header class="header">
+      <div class="header__logo">
+        <button id="btn-sidebar-toggle" class="btn-icon btn-ghost" style="display:none" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="header__logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>EduMonitor</span>
+        <span class="header__pro-badge">Enterprise</span>
+      </div>
+      <div class="header__actions">
+        <div class="system-status-pill">
+          <span class="status-dot-pulse"></span>
+          <span>System Online</span>
+        </div>
+
+        <span class="header__role" id="user-role">student</span>
+        <div class="header__user">
+          <div class="header__avatar" id="user-avatar-letter">?</div>
+          <span id="user-name">User</span>
+        </div>
+        <button id="btn-logout" class="btn btn-ghost btn-sm" title="Log out">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Sidebar ────────────────────────────────────────────────── -->
+    <nav class="sidebar">
+      <div class="sidebar__section-title">Navigation</div>
+      <ul class="sidebar__nav">
+        <li class="sidebar__item active" data-nav="dashboard">
+          <i class="fas fa-th-large"></i> Dashboard
+        </li>
+        <li class="sidebar__item" data-nav="classes">
+          <i class="fas fa-chalkboard"></i> Classes
+        </li>
+        <li class="sidebar__item" data-nav="students" data-roles="teacher,admin">
+          <i class="fas fa-user-graduate"></i> Students
+        </li>
+        <li class="sidebar__item" data-nav="assignments">
+          <i class="fas fa-tasks"></i> Assignments
+        </li>
+        <li class="sidebar__item" data-nav="materials">
+          <i class="fas fa-book-open"></i> Study Materials
+        </li>
+        <li class="sidebar__item" data-nav="reports" data-roles="teacher,admin">
+          <i class="fas fa-chart-pie"></i> Reports
+        </li>
+        <li class="sidebar__item" data-nav="admin" data-roles="admin">
+          <i class="fas fa-user-cog"></i> Admin Panel
+        </li>
+        <li class="sidebar__item" data-nav="profile">
+          <i class="fas fa-user-circle"></i> Profile
+        </li>
+      </ul>
+
+      <!-- Quick Actions -->
+      <div class="sidebar__section-title" data-roles="teacher">Quick Actions</div>
+      <ul class="sidebar__nav" data-roles="teacher">
+        <li class="sidebar__item" onclick="openModal('create-class-modal')">
+          <i class="fas fa-plus-circle"></i> New Class
+        </li>
+        <li class="sidebar__item" onclick="openModal('create-assignment-modal')">
+          <i class="fas fa-tasks text-primary"></i> New Assignment
+        </li>
+        <li class="sidebar__item" onclick="openModal('add-material-modal')">
+          <i class="fas fa-book-open text-info"></i> Add Material
+        </li>
+      </ul>
+      <div class="sidebar__section-title" data-roles="student">Quick Actions</div>
+      <ul class="sidebar__nav" data-roles="student">
+        <li class="sidebar__item" onclick="openModal('join-class-modal')">
+          <i class="fas fa-sign-in-alt"></i> Join Class
+        </li>
+        <li class="sidebar__item" onclick="openModal('join-session-modal')">
+          <i class="fas fa-video text-success"></i> Join Session
+        </li>
+      </ul>
+    </nav>
+
+    <!-- ── Main Content Area ──────────────────────────────────────── -->
+    <main class="main">
+
+      <!-- Dashboard -->
+      <section data-page="dashboard">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Dashboard</h1>
+            <div class="page-header__subtitle">Welcome back! Here's your overview.</div>
+          </div>
+        </div>
+        <div id="dashboard-content"></div>
+      </section>
+
+      <!-- Classes -->
+      <section data-page="classes" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Classes</h1>
+            <div class="page-header__subtitle">Manage and browse your classes</div>
+          </div>
+          <div class="d-flex gap-sm">
+            <button class="btn btn-primary btn-sm" data-roles="teacher,admin" onclick="openModal('create-class-modal')">
+              <i class="fas fa-plus"></i> New Class
+            </button>
+            <button class="btn btn-secondary btn-sm" data-roles="student" onclick="openModal('join-class-modal')">
+              <i class="fas fa-sign-in-alt"></i> Join Class
+            </button>
+          </div>
+        </div>
+        <div id="classes-content"></div>
+      </section>
+
+      <!-- Students Directory (Teacher & Admin) -->
+      <section data-page="students" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Students Directory</h1>
+            <div class="page-header__subtitle">Monitor individual learner progress, attendance velocity, and engagement profiles</div>
+          </div>
+        </div>
+        <div id="students-content"></div>
+      </section>
+
+      <!-- Assignments (Teacher & Student) -->
+      <section data-page="assignments" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Assignments</h1>
+            <div class="page-header__subtitle">Assign coursework, review submissions, and deliver actionable teacher remarks</div>
+          </div>
+          <div class="d-flex gap-sm">
+            <button class="btn btn-primary btn-sm" data-roles="teacher,admin" onclick="openModal('create-assignment-modal')">
+              <i class="fas fa-plus"></i> New Assignment
+            </button>
+          </div>
+        </div>
+        <div id="assignments-content"></div>
+      </section>
+
+      <!-- Study Materials (Teacher & Student) -->
+      <section data-page="materials" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Study Materials & Notes</h1>
+            <div class="page-header__subtitle">Access lecture notes, YouTube video walkthroughs, and interactive reference guides</div>
+          </div>
+          <div class="d-flex gap-sm">
+            <button class="btn btn-primary btn-sm" data-roles="teacher,admin" onclick="openModal('add-material-modal')">
+              <i class="fas fa-plus"></i> Add Material
+            </button>
+          </div>
+        </div>
+        <div id="materials-content"></div>
+      </section>
+
+      <!-- Class Detail -->
+      <section data-page="class-detail" class="hidden">
+        <div class="page-header">
+          <div>
+            <button class="btn btn-ghost btn-sm mb-sm" onclick="navigate('classes')"><i class="fas fa-arrow-left"></i> Back</button>
+            <h1 class="page-header__title">Class Details</h1>
+          </div>
+        </div>
+        <div id="class-detail-content"></div>
+      </section>
+
+      <!-- Live Session -->
+      <section data-page="session" class="hidden">
+        <div id="session-content"></div>
+      </section>
+
+      <!-- Teacher Monitor -->
+      <section data-page="monitor" class="hidden">
+        <div id="monitor-content"></div>
+      </section>
+
+      <!-- Reports -->
+      <section data-page="reports" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Reports & Analytics</h1>
+            <div class="page-header__subtitle">Engagement data with charts and exports</div>
+          </div>
+        </div>
+        <div id="reports-content"></div>
+      </section>
+
+      <!-- Admin -->
+      <section data-page="admin" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">Admin Panel</h1>
+            <div class="page-header__subtitle">Manage users, classes, and system settings</div>
+          </div>
+        </div>
+        <div id="admin-content"></div>
+      </section>
+
+      <!-- Profile -->
+      <section data-page="profile" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-header__title">My Profile</h1>
+            <div class="page-header__subtitle">Your account and engagement history</div>
+          </div>
+        </div>
+        <div id="profile-content"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODALS
+       ═══════════════════════════════════════════════════════════════ -->
+
+  <!-- Create Class Modal -->
+  <div id="create-class-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('create-class-modal')">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-plus-circle text-primary"></i> Create Class</h3>
+        <button class="modal__close" onclick="closeModal('create-class-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="create-class-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="class-name">Class Name *</label>
+          <input class="form-input" id="class-name" placeholder="e.g. Data Structures" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="class-subject">Subject</label>
+          <input class="form-input" id="class-subject" placeholder="e.g. Computer Science">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="class-desc">Description</label>
+          <textarea class="form-input" id="class-desc" placeholder="Brief class description…"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="class-schedule">Schedule</label>
+          <input class="form-input" id="class-schedule" placeholder="e.g. Mon/Wed 10:00 AM">
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('create-class-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Class</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Join Class Modal -->
+  <div id="join-class-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('join-class-modal')">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-sign-in-alt text-secondary"></i> Join Class</h3>
+        <button class="modal__close" onclick="closeModal('join-class-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="join-class-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="join-code">Class Join Code</label>
+          <input class="form-input" id="join-code" placeholder="e.g. A3B2C1" maxlength="6"
+                 style="text-transform:uppercase; font-size:var(--font-2xl); text-align:center; letter-spacing:8px; font-weight:700" required>
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('join-class-modal')">Cancel</button>
+          <button type="submit" class="btn btn-secondary">Join Class</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Session Modal -->
+  <div id="create-session-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('create-session-modal')">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-video text-success"></i> New Session</h3>
+        <button class="modal__close" onclick="closeModal('create-session-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="create-session-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="session-title">Session Title *</label>
+          <input class="form-input" id="session-title" placeholder="e.g. Lecture 5: Trees" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="session-desc">Description</label>
+          <textarea class="form-input" id="session-desc" placeholder="Optional notes…"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="session-time">Scheduled Time</label>
+          <input class="form-input" id="session-time" type="datetime-local">
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('create-session-modal')">Cancel</button>
+          <button type="submit" class="btn btn-success">Create & Start</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Poll Modal -->
+  <div id="create-poll-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('create-poll-modal')">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-poll text-warning"></i> Create Poll</h3>
+        <button class="modal__close" onclick="closeModal('create-poll-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="create-poll-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="poll-question">Question *</label>
+          <input class="form-input" id="poll-question" placeholder="What is the time complexity of…?" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="poll-options">Options (one per line, min 2) *</label>
+          <textarea class="form-input" id="poll-options" placeholder="O(1)&#10;O(log n)&#10;O(n)&#10;O(n²)" rows="5" required></textarea>
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('create-poll-modal')">Cancel</button>
+          <button type="submit" class="btn btn-warning">Send Poll</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Quiz Modal -->
+  <div id="create-quiz-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('create-quiz-modal')">
+    <div class="modal" style="max-width:550px">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-question-circle text-primary"></i> Create Live Quiz</h3>
+        <button class="modal__close" onclick="closeModal('create-quiz-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="create-quiz-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="quiz-title">Quiz Title *</label>
+          <input class="form-input" id="quiz-title" placeholder="e.g. Trees & Graphs Checkpoint" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="quiz-q1">Question 1 *</label>
+          <input class="form-input mb-xs" id="quiz-q1" placeholder="e.g. Which traversal uses a FIFO Queue?" required>
+          <label class="form-label text-xs text-muted" for="quiz-opt1">Options (one per line, min 2) *</label>
+          <textarea class="form-input" id="quiz-opt1" placeholder="Breadth-First Search (BFS)&#10;Depth-First Search (DFS)&#10;In-Order Traversal" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="quiz-q2">Question 2 (Optional)</label>
+          <input class="form-input mb-xs" id="quiz-q2" placeholder="e.g. What is the worst-case lookup in a balanced BST?">
+          <label class="form-label text-xs text-muted" for="quiz-opt2">Options (one per line)</label>
+          <textarea class="form-input" id="quiz-opt2" placeholder="O(1)&#10;O(log n)&#10;O(n)" rows="3"></textarea>
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('create-quiz-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Launch Quiz</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Join Session Modal -->
+  <div id="join-session-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('join-session-modal')">
+    <div class="modal">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-video text-success"></i> Join Live Session</h3>
+        <button class="modal__close" onclick="closeModal('join-session-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="join-session-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="session-join-code">Session Code or Session ID *</label>
+          <input class="form-input" id="session-join-code" placeholder="e.g. GRAPHS or session ID"
+                 style="font-size:var(--font-lg); text-align:center; font-weight:700" required>
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('join-session-modal')">Cancel</button>
+          <button type="submit" class="btn btn-success">Join Session</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Student Detail Modal -->
+  <div id="student-detail-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('student-detail-modal')">
+    <div class="modal" style="max-width:820px; max-height:90vh; overflow-y:auto">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-user-graduate text-primary"></i> Student Performance Dossier</h3>
+        <button class="modal__close" onclick="closeModal('student-detail-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="student-detail-body" class="modal__body"></div>
+    </div>
+  </div>
+
+  <!-- Create Assignment Modal -->
+  <div id="create-assignment-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('create-assignment-modal')">
+    <div class="modal" style="max-width:550px">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-tasks text-primary"></i> Create Course Assignment</h3>
+        <button class="modal__close" onclick="closeModal('create-assignment-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="create-assignment-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="assignment-class-select">Target Class *</label>
+          <select class="form-select" id="assignment-class-select" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assignment-title">Assignment Title *</label>
+          <input class="form-input" id="assignment-title" placeholder="e.g. Problem Set 2: Dynamic Programming" required>
+        </div>
+        <div class="grid-2 gap-sm">
+          <div class="form-group">
+            <label class="form-label" for="assignment-due">Due Date & Time *</label>
+            <input class="form-input" id="assignment-due" type="datetime-local" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="assignment-points">Max Points</label>
+            <input class="form-input" id="assignment-points" type="number" value="100" min="1" max="1000" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assignment-desc">Instructions & Requirements *</label>
+          <textarea class="form-input" id="assignment-desc" rows="4" placeholder="Detail the problem statement, submission requirements, grading criteria..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="assignment-resources">Reference Link / Starter Code (Optional)</label>
+          <input class="form-input" id="assignment-resources" placeholder="https://github.com/... or Google Drive link">
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('create-assignment-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish Assignment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Submit Assignment Modal -->
+  <div id="submit-assignment-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('submit-assignment-modal')">
+    <div class="modal" style="max-width:550px">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-file-upload text-success"></i> Submit Assignment Work</h3>
+        <button class="modal__close" onclick="closeModal('submit-assignment-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="submit-assignment-form" class="modal__body">
+        <input type="hidden" id="submit-assignment-id">
+        <div class="mb-md">
+          <h4 id="submit-modal-title" class="fw-700 fs-lg">Assignment Title</h4>
+          <div id="submit-modal-class" class="text-xs text-muted">Class Name</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="submit-content">Written Response / Explanation *</label>
+          <textarea class="form-input" id="submit-content" rows="5" placeholder="Type or paste your answers, summary, code explanation..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="submit-link">Project / Solution URL (GitHub, Google Drive, PDF link)</label>
+          <input class="form-input" id="submit-link" placeholder="https://github.com/my-repo or cloud link">
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('submit-assignment-modal')">Cancel</button>
+          <button type="submit" class="btn btn-success">Send to Teacher</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Review Submissions & Remarks Modal -->
+  <div id="review-submissions-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('review-submissions-modal')">
+    <div class="modal" style="max-width:850px; max-height:90vh; overflow-y:auto">
+      <div class="modal__header">
+        <div>
+          <h3 class="modal__title"><i class="fas fa-check-double text-primary"></i> Submissions & Remarks</h3>
+          <div id="review-assignment-subtitle" class="text-xs text-muted mt-xs">Class & Assignment Name</div>
+        </div>
+        <button class="modal__close" onclick="closeModal('review-submissions-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="review-submissions-body" class="modal__body"></div>
+    </div>
+  </div>
+
+  <!-- Add Study Material Modal -->
+  <div id="add-material-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('add-material-modal')">
+    <div class="modal" style="max-width:550px">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-book-open text-primary"></i> Add Study Material</h3>
+        <button class="modal__close" onclick="closeModal('add-material-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="add-material-form" class="modal__body">
+        <div class="form-group">
+          <label class="form-label" for="material-class-select">Course / Class *</label>
+          <select class="form-select" id="material-class-select" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="material-type">Material Category *</label>
+          <select class="form-select" id="material-type" onchange="toggleMaterialFields(this.value)">
+            <option value="youtube">YouTube Video Walkthrough</option>
+            <option value="notes">Lecture Notes / Summary Document</option>
+            <option value="document">PDF / Document Link</option>
+            <option value="link">Web Reference / External Guide</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="material-title">Resource Title *</label>
+          <input class="form-input" id="material-title" placeholder="e.g. Lecture 4 Video: Binary Trees & Heaps" required>
+        </div>
+        <div class="form-group" id="material-url-group">
+          <label class="form-label" for="material-url">Resource URL (YouTube, Google Drive, Docs)</label>
+          <input class="form-input" id="material-url" placeholder="https://www.youtube.com/watch?v=... or link">
+        </div>
+        <div class="form-group" id="material-content-group">
+          <label class="form-label" for="material-content">Lecture Notes / Summary Content</label>
+          <textarea class="form-input" id="material-content" rows="5" placeholder="Key takeaways, formulas, definitions, study checklist..."></textarea>
+        </div>
+        <div class="modal__footer" style="padding:0; margin-top:var(--space-md)">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('add-material-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish Material</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Study Material Modal -->
+  <div id="view-material-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('view-material-modal')">
+    <div class="modal" style="max-width:800px; max-height:90vh; overflow-y:auto">
+      <div class="modal__header">
+        <h3 class="modal__title" id="view-material-title"><i class="fas fa-play-circle text-primary"></i> Study Material</h3>
+        <button class="modal__close" onclick="closeModal('view-material-modal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="view-material-body" class="modal__body"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SCRIPTS
+       ═══════════════════════════════════════════════════════════════ -->
+  <!-- Firebase SDK (compat mode for simplicity) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+  <!-- Socket.IO -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- face-api.js (opt-in face detection) -->
+  <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/dist/face-api.min.js" defer></script>
+
+  <!-- App scripts (order matters) -->
+  <script src="/static/js/firebase-init.js"></script>
+  <script src="/static/js/socket-client.js"></script>
+  <script src="/static/js/activity-monitor.js"></script>
+  <script src="/static/js/video.js"></script>
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+  <script src="/static/js/app.js"></script>
+
+</body>
+</html>

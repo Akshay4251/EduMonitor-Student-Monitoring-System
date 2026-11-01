@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+firebase_admin_key.json
+venv/
+.venv/
+*.log
+node_modules/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
