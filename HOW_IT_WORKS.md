@@ -197,3 +197,4 @@ To verify that all features, security roles, scoring algorithms, and database qu
 python test_app.py
 ```
 This runs 11 automated test suites covering Auth, Classes, Quizzes, Socket.IO, Student Directory, Assignments & Remarks, Study Materials, and Session Join.
+
