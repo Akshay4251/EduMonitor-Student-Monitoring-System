@@ -50,11 +50,17 @@ function updateSystemStatusBadge(isLive, projectId) {
     const res = await fetch(baseUrl + '/api/config/firebase');
     if (res.ok) {
       const data = await res.json();
-      if (data.configured && data.config && data.config.apiKey && window.firebase) {
+      const isLiveBackend = data.mode === 'live';
+      const isLiveFrontend = Boolean(data.configured && data.config && data.config.apiKey && window.firebase);
+
+      if (isLiveFrontend) {
         if (!firebase.apps.length) {
           firebase.initializeApp(data.config);
         }
         firebaseAuthInstance = firebase.auth();
+      }
+
+      if (isLiveBackend || isLiveFrontend) {
         console.log("[Auth] Connected to Live Firebase Cloud Project:", data.projectId);
         updateSystemStatusBadge(true, data.projectId);
         window.dispatchEvent(new CustomEvent('firebase-status-change', { detail: { live: true, projectId: data.projectId } }));
