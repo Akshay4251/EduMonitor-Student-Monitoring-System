@@ -113,6 +113,5 @@ def handle_500(e):
 
 # ── Run ───────────────────────────────────────────────────────────
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    print(f"[EduMonitor] Student Monitoring System running on http://0.0.0.0:{port}")
-    socketio.run(app, host='0.0.0.0', port=port, debug=False, allow_unsafe_werkzeug=True)
+    print("[EduMonitor] Student Monitoring System running on http://localhost:5000")
+    socketio.run(app, host='0.0.0.0', port=5000, debug=False, allow_unsafe_werkzeug=True)

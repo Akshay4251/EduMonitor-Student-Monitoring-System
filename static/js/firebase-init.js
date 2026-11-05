@@ -21,8 +21,7 @@ let firebaseAuthInstance = null;
 // Dynamically check backend for configured Firebase credentials or fallback to local mode
 (async function initFirebaseClient() {
   try {
-    const isHostedDomain = window.location.protocol !== 'file:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    const baseUrl = (!isHostedDomain && (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000')))
+    const baseUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000'))
       ? 'http://127.0.0.1:5000'
       : '';
     const res = await fetch(baseUrl + '/api/config/firebase');
@@ -50,11 +49,7 @@ const Auth = {
   _authListeners: [],
 
   _getBaseUrl() {
-    // If running in cloud hosted production (e.g. Render, Koyeb, custom domain), use relative URL
-    if (window.location.protocol !== 'file:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      return '';
-    }
-    // If loaded from file:// or external dev server (e.g. port 5500 Live Server, 3000) targeting local Flask
+    // When loaded from file:// or external dev port (e.g. 5500 Live Server), target local Flask backend
     if (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000')) {
       return 'http://127.0.0.1:5000';
     }

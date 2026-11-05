@@ -17,8 +17,7 @@ const SocketClient = (() => {
       return;
     }
 
-    const isHostedDomain = window.location.protocol !== 'file:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    const socketUrl = (!isHostedDomain && (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000')))
+    const socketUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000'))
       ? 'http://127.0.0.1:5000'
       : undefined;
     socket = io(socketUrl, { transports: ['websocket', 'polling'] });
