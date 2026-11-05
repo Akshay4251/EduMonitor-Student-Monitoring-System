@@ -65,7 +65,8 @@
       "class-cs220",
       "f492d07b",
       "c28f5244",
-      "c8732e31"
+      "c8732e31",
+      "dc510631"
     ],
     "password": "password123"
   },
@@ -418,9 +419,9 @@
   "sessions:::session-001:::attendance:::student-201": {
     "uid": "student-201",
     "name": "Alex Rivera",
-    "joinTime": "2026-11-05T07:58:56.058899+00:00",
-    "leaveTime": "2026-11-05T07:58:56.069798+00:00",
-    "duration": 0.01093,
+    "joinTime": "2026-11-05T08:05:46.960182+00:00",
+    "leaveTime": "2026-11-05T08:05:46.972270+00:00",
+    "duration": 0.012099,
     "status": "present"
   },
   "sessions:::session-001:::activity:::student-201": {
@@ -433,7 +434,7 @@
     "pollResponses": 0,
     "quizResponses": 0,
     "handRaiseCount": 1,
-    "flushedAt": "2026-11-05T07:58:56.076475+00:00"
+    "flushedAt": "2026-11-05T08:05:46.977711+00:00"
   },
   "sessions:::session-001:::engagement:::student-201": {
     "uid": "student-201",
@@ -1513,6 +1514,101 @@
     "grade": 98.0,
     "remarks": "Outstanding tree traversal implementation! Elegant recursion and clean time complexity.",
     "reviewedAt": "2026-11-05T07:58:56.129737+00:00",
+    "reviewedBy": "teacher-101"
+  },
+  "users:::user-642ac2bf": {
+    "uid": "user-642ac2bf",
+    "email": "newuser_0c7dbe@example.com",
+    "displayName": "Test User",
+    "role": "student",
+    "active": true,
+    "createdAt": "2026-11-05T08:05:46.561881+00:00",
+    "password": "password123",
+    "enrolledClasses": []
+  },
+  "classes:::dc510631": {
+    "id": "dc510631",
+    "name": "Physics 101",
+    "description": "Mechanics & Optics",
+    "subject": "Physics",
+    "teacherId": "teacher-101",
+    "teacherName": "Dr. Robert Anderson",
+    "schedule": "Tue/Thu 2:00 PM",
+    "students": [
+      "student-201"
+    ],
+    "joinCode": "46F4BC",
+    "createdAt": "2026-11-05T08:05:46.576702+00:00",
+    "active": true
+  },
+  "sessions:::b606081b-2": {
+    "id": "b606081b-2",
+    "classId": "class-101",
+    "className": "CS 301: Advanced Algorithms & Computational Complexity",
+    "teacherId": "teacher-101",
+    "teacherName": "Dr. Robert Anderson",
+    "title": "Test Session Alpha",
+    "description": "Testing session flow",
+    "scheduledAt": "",
+    "startedAt": "2026-11-05T08:05:46.615650+00:00",
+    "endedAt": null,
+    "status": "live",
+    "joinCode": "19049B",
+    "participants": [],
+    "createdAt": "2026-11-05T08:05:46.609635+00:00"
+  },
+  "sessions:::b606081b-2:::quizzes:::a2283029": {
+    "id": "a2283029",
+    "title": "Pop Quiz",
+    "questions": [
+      {
+        "options": [
+          "1",
+          "2",
+          "3"
+        ],
+        "question": "1 + 1 = ?"
+      }
+    ],
+    "responses": {},
+    "active": true,
+    "duration": 300,
+    "createdAt": "2026-11-05T08:05:46.626694+00:00"
+  },
+  "sessions:::session-001:::chat:::fcaea9ab-7": {
+    "uid": "student-201",
+    "name": "Alex Rivera",
+    "message": "Hello everyone!",
+    "timestamp": "2026-11-05T08:05:46.964877+00:00"
+  },
+  "assignments:::c7018784-1": {
+    "id": "c7018784-1",
+    "classId": "class-101",
+    "className": "CS 301: Advanced Algorithms & Computational Complexity",
+    "teacherId": "teacher-101",
+    "teacherName": "Dr. Robert Anderson",
+    "title": "Binary Trees Lab Assignment",
+    "description": "Implement BFS and DFS tree traversal with recursion.",
+    "dueDate": "2026-11-15T23:59:00",
+    "points": 100,
+    "resources": "",
+    "createdAt": "2026-11-05T08:05:47.014891+00:00"
+  },
+  "assignments:::c7018784-1:::submissions:::student-201": {
+    "studentId": "student-201",
+    "studentUid": "student-201",
+    "uid": "student-201",
+    "studentName": "Liam Chen",
+    "studentEmail": "student@example.com",
+    "assignmentId": "c7018784-1",
+    "content": "Completed BFS and DFS traversal algorithms. All unit tests passed.",
+    "submissionUrl": "https://github.com/student/binary-trees-solution",
+    "attachmentUrl": "https://github.com/student/binary-trees-solution",
+    "submittedAt": "2026-11-05T08:05:47.027262+00:00",
+    "status": "graded",
+    "grade": 98.0,
+    "remarks": "Outstanding tree traversal implementation! Elegant recursion and clean time complexity.",
+    "reviewedAt": "2026-11-05T08:05:47.036997+00:00",
     "reviewedBy": "teacher-101"
   }
 }

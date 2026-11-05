@@ -2,6 +2,8 @@
 
 A real-time student engagement monitoring system for virtual classrooms built with **Python (Flask + Flask-SocketIO)**, **Firebase / Firestore**, **WebRTC**, and **Vanilla Modern JS**.
 
+> 🌐 **Deploy Live for Free**: Want to host this application online for free forever? Check the step-by-step [Free Hosting Guide](FREE_HOSTING_GUIDE.md).
+
 ---
 
 ## 🌟 Key Features
