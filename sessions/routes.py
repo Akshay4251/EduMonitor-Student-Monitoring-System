@@ -14,6 +14,7 @@ sessions_bp = Blueprint('sessions', __name__, url_prefix='/api/sessions')
 
 
 @sessions_bp.route('', methods=['POST'])
+@sessions_bp.route('/', methods=['POST'])
 @require_auth
 @require_role('teacher', 'admin')
 def create_session():
@@ -48,6 +49,7 @@ def create_session():
 
 
 @sessions_bp.route('', methods=['GET'])
+@sessions_bp.route('/', methods=['GET'])
 @require_auth
 def list_sessions():
     class_id = request.args.get('classId')

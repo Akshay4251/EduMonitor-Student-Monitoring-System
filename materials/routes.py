@@ -28,6 +28,7 @@ def extract_youtube_id(url):
 
 
 @materials_bp.route('', methods=['POST'])
+@materials_bp.route('/', methods=['POST'])
 @require_auth
 @require_role('teacher', 'admin')
 def create_material():
@@ -70,6 +71,7 @@ def create_material():
 
 
 @materials_bp.route('', methods=['GET'])
+@materials_bp.route('/', methods=['GET'])
 @require_auth
 def list_materials():
     """

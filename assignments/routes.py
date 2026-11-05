@@ -13,6 +13,7 @@ assignments_bp = Blueprint('assignments', __name__, url_prefix='/api/assignments
 
 
 @assignments_bp.route('', methods=['POST'])
+@assignments_bp.route('/', methods=['POST'])
 @require_auth
 @require_role('teacher', 'admin')
 def create_assignment():
@@ -50,6 +51,7 @@ def create_assignment():
 
 
 @assignments_bp.route('', methods=['GET'])
+@assignments_bp.route('/', methods=['GET'])
 @require_auth
 def list_assignments():
     """

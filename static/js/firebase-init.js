@@ -40,6 +40,15 @@ if (isFirebaseConfigured) {
 const Auth = {
   _authListeners: [],
 
+  _getBaseUrl() {
+    // If the page is loaded on a different port (e.g. 5500 Live Server, 3000) or file://,
+    // route API calls directly to the Flask backend running on port 5000.
+    if (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000')) {
+      return 'http://127.0.0.1:5000';
+    }
+    return '';
+  },
+
   _notifyListeners(user) {
     this._authListeners.forEach(cb => {
       try { cb(user); } catch (e) { console.error(e); }
@@ -55,7 +64,7 @@ const Auth = {
 
       // 2. Tell backend to set custom claims + Firestore doc
       const token = await cred.user.getIdToken(true);
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(this._getBaseUrl() + '/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ email, password, displayName, role }),
@@ -68,12 +77,23 @@ const Auth = {
       return data;
     } else {
       // Local Auth registration
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, displayName, role }),
-      });
-      const data = await res.json();
+      let res;
+      try {
+        res = await fetch(this._getBaseUrl() + '/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, displayName, role }),
+        });
+      } catch (err) {
+        throw new Error('Cannot connect to authentication server. Please ensure Flask is running ("python app.py").');
+      }
+
+      const ct = (res.headers.get('content-type') || '').toLowerCase();
+      if (ct.includes('text/html')) {
+        throw new Error('Authentication server returned HTML. Please open the app directly at http://localhost:5000.');
+      }
+
+      const data = await res.json().catch(() => ({ error: 'Invalid response from auth server' }));
       if (!res.ok) throw new Error(data.error || 'Registration failed');
 
       if (data.token) {
@@ -100,12 +120,23 @@ const Auth = {
       }
       return cred.user;
     } else {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
+      let res;
+      try {
+        res = await fetch(this._getBaseUrl() + '/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+      } catch (err) {
+        throw new Error('Cannot connect to backend server. Please make sure Flask is running on port 5000 ("python app.py").');
+      }
+
+      const ct = (res.headers.get('content-type') || '').toLowerCase();
+      if (ct.includes('text/html')) {
+        throw new Error('Backend returned HTML instead of JSON. Please access the application at http://localhost:5000.');
+      }
+
+      const data = await res.json().catch(() => ({ error: 'Invalid response from server' }));
       if (!res.ok) throw new Error(data.error || 'Login failed');
 
       localStorage.setItem('edumonitor_token', data.token);
@@ -142,17 +173,45 @@ const Auth = {
     const token = await this.getToken();
     const headers = {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       ...(options.headers || {}),
     };
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(url, { ...options, headers });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: res.statusText }));
-      throw new Error(err.error || res.statusText);
+
+    const fullUrl = url.startsWith('http') ? url : (this._getBaseUrl() + url);
+
+    let res;
+    try {
+      res = await fetch(fullUrl, { ...options, headers });
+    } catch (networkErr) {
+      throw new Error(`Cannot connect to server at ${fullUrl}. Make sure the Flask server is running ('python app.py').`);
     }
-    const ct = res.headers.get('content-type') || '';
+
+    const ct = (res.headers.get('content-type') || '').toLowerCase();
+
+    // Check for downloadable files
     if (ct.includes('text/csv') || ct.includes('application/pdf')) return res;
-    return res.json();
+
+    // Check if server returned HTML instead of JSON
+    if (ct.includes('text/html')) {
+      if (res.status === 401 || res.status === 403) {
+        throw new Error('Session expired or unauthorized. Please sign in again.');
+      }
+      throw new Error(`Endpoint ${url} returned HTML (${res.status} ${res.statusText}). Make sure Flask is running at http://localhost:5000.`);
+    }
+
+    let data;
+    try {
+      data = await res.json();
+    } catch (jsonErr) {
+      throw new Error(`Invalid JSON received from ${url} (Status ${res.status}).`);
+    }
+
+    if (!res.ok) {
+      throw new Error(data.error || data.message || res.statusText || 'API request failed');
+    }
+
+    return data;
   },
 
   /** Listen for auth state changes */

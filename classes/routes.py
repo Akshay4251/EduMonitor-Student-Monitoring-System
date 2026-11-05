@@ -13,6 +13,7 @@ classes_bp = Blueprint('classes', __name__, url_prefix='/api/classes')
 
 
 @classes_bp.route('', methods=['POST'])
+@classes_bp.route('/', methods=['POST'])
 @require_auth
 @require_role('teacher', 'admin')
 def create_class():
@@ -38,6 +39,7 @@ def create_class():
 
 
 @classes_bp.route('', methods=['GET'])
+@classes_bp.route('/', methods=['GET'])
 @require_auth
 def list_classes():
     if g.role == 'admin':

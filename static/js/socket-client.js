@@ -11,7 +11,10 @@ const SocketClient = (() => {
     if (socket && socket.connected) disconnect();
 
     currentSessionId = sessionId;
-    socket = io({ transports: ['websocket', 'polling'] });
+    const socketUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000'))
+      ? 'http://127.0.0.1:5000'
+      : undefined;
+    socket = io(socketUrl, { transports: ['websocket', 'polling'] });
 
     socket.on('connect', () => {
       console.log('[Socket] Connected:', socket.id);
