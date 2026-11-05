@@ -131,15 +131,20 @@ def list_teacher_students():
         class_docs = list(db.collection('classes').where('teacherId', '==', g.uid).where('active', '==', True).stream())
 
     classes_map = {}
-    student_classes = {}  # { student_uid: [ { id, name, subject } ] }
+    student_classes = {}  # { canonical_student_uid: [ { id, name, subject } ] }
     for cd in class_docs:
         cdata = cd.to_dict()
         cid = cd.id
         classes_map[cid] = cdata
         for sid in cdata.get('students', []):
-            existing_cids = {c['id'] for c in student_classes.get(sid, [])}
+            # Resolve canonical student UID to eliminate duplicate aliases
+            sdoc = db.collection('users').document(sid).get()
+            sdata = sdoc.to_dict() if sdoc.exists else {}
+            canonical_uid = sdata.get('uid') or sid
+
+            existing_cids = {c['id'] for c in student_classes.get(canonical_uid, [])}
             if cid not in existing_cids:
-                student_classes.setdefault(sid, []).append({
+                student_classes.setdefault(canonical_uid, []).append({
                     'id': cid,
                     'name': cdata.get('name', 'Untitled Class'),
                     'subject': cdata.get('subject', ''),
@@ -148,13 +153,20 @@ def list_teacher_students():
 
     # 2. For each student, get profile + calculate summary metrics
     students = []
+    seen_student_uids = set()
     for sid, enrolled in student_classes.items():
         sdoc = db.collection('users').document(sid).get()
         sdata = sdoc.to_dict() if sdoc.exists else {}
+        canonical_uid = sdata.get('uid') or sid
+        if canonical_uid in seen_student_uids:
+            continue
+        seen_student_uids.add(canonical_uid)
 
         # Look up attendance & engagement across teacher's classes
         try:
-            att_docs = list(db.collection_group('attendance').where('uid', '==', sid).stream())
+            att_docs = list(db.collection_group('attendance').where('uid', '==', canonical_uid).stream())
+            if not att_docs and sid != canonical_uid:
+                att_docs = list(db.collection_group('attendance').where('uid', '==', sid).stream())
         except Exception:
             att_docs = []
 

@@ -144,7 +144,7 @@ def get_seed_data():
             'joinCode': 'ALG301',
             'teacherId': 'teacher-101',
             'teacherName': 'Dr. Robert Anderson',
-            'students': ['student-201', 'student-202', 'student-203', 'student-204', 'student-205', 'student@example.com', 'student2@example.com'],
+            'students': ['student-201', 'student-202', 'student-203', 'student-204', 'student-205'],
             'createdAt': now,
             'active': True,
         },

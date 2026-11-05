@@ -18,6 +18,29 @@ const firebaseConfig = {
 
 let firebaseAuthInstance = null;
 
+function updateSystemStatusBadge(isLive, projectId) {
+  const apply = () => {
+    const statusText = document.getElementById('system-status-text');
+    const statusDot = document.getElementById('system-status-dot');
+    const engineLabel = document.getElementById('storage-engine-label');
+
+    if (isLive) {
+      if (statusText) statusText.textContent = 'Firebase Cloud';
+      if (statusDot) statusDot.style.background = '#10b981';
+      if (engineLabel) engineLabel.textContent = `Firebase Cloud (${projectId || 'Live'}) • Enterprise Ready`;
+    } else {
+      if (statusText) statusText.textContent = 'Local Database';
+      if (statusDot) statusDot.style.background = '#06858e';
+      if (engineLabel) engineLabel.textContent = 'EduMonitor Local DB • Zero-Setup Ready';
+    }
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', apply);
+  } else {
+    apply();
+  }
+}
+
 // Dynamically check backend for configured Firebase credentials or fallback to local mode
 (async function initFirebaseClient() {
   try {
@@ -33,6 +56,7 @@ let firebaseAuthInstance = null;
         }
         firebaseAuthInstance = firebase.auth();
         console.log("[Auth] Connected to Live Firebase Cloud Project:", data.projectId);
+        updateSystemStatusBadge(true, data.projectId);
         window.dispatchEvent(new CustomEvent('firebase-status-change', { detail: { live: true, projectId: data.projectId } }));
         return;
       }
@@ -41,6 +65,7 @@ let firebaseAuthInstance = null;
     console.warn("[Auth] Firebase auto-config check info:", e);
   }
   console.log("[Auth] Running in High-Performance Local Database Mode with real academic data.");
+  updateSystemStatusBadge(false);
   window.dispatchEvent(new CustomEvent('firebase-status-change', { detail: { live: false } }));
 })();
 
