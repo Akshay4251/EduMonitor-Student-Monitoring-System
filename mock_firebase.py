@@ -46,6 +46,9 @@ class MockDocumentReference:
     def update(self, updates):
         self._db._update_doc_data(self._path, updates)
 
+    def delete(self):
+        self._db._delete_doc_data(self._path)
+
     def collection(self, name):
         return MockCollectionReference(self._db, self._path + [name])
 
@@ -156,6 +159,13 @@ class MockFirestore:
             self._storage[key].update(copy.deepcopy(data))
         else:
             self._storage[key] = copy.deepcopy(data)
+
+    def _delete_doc_data(self, path_parts):
+        key = tuple(path_parts)
+        self._storage.pop(key, None)
+        subkeys = [k for k in self._storage if len(k) > len(key) and k[:len(key)] == key]
+        for sk in subkeys:
+            self._storage.pop(sk, None)
 
     def _update_doc_data(self, path_parts, updates):
         key = tuple(path_parts)
@@ -391,7 +401,7 @@ class MockFirestore:
             'startedAt': now,
             'endedAt': None,
             'status': 'live',
-            'joinCode': 'GRAPHS',
+            'joinCode': 'BST001',
             'participants': [],
             'createdAt': now,
         }

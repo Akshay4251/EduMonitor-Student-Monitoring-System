@@ -3,6 +3,8 @@ Comprehensive test suite for EduMonitor (Student Monitoring System).
 Tests Auth, Classes, Sessions, Monitoring, Scoring, Reports, Admin, and Socket.IO.
 """
 
+import os
+os.environ.setdefault('USE_MOCK', 'true')
 import unittest
 import json
 import io

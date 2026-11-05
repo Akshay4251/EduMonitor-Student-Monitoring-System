@@ -14,9 +14,9 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY', 'edumonitor-super-secure-secret-key-32-chars-long!')
 
 _key_path = os.path.join(os.path.dirname(__file__), 'firebase_admin_key.json')
-USE_MOCK = False
+USE_MOCK = os.getenv('USE_MOCK', '').lower() in ('true', '1')
 
-if os.path.exists(_key_path):
+if not USE_MOCK and os.path.exists(_key_path):
     try:
         _cred = credentials.Certificate(_key_path)
         firebase_admin.initialize_app(_cred)

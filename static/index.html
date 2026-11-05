@@ -723,8 +723,13 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
-  <!-- Socket.IO -->
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <!-- Socket.IO (Local bundled client with reliable CDN fallback) -->
+  <script src="/static/js/socket.io.min.js"></script>
+  <script>
+    if (typeof io === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"><\/script>');
+    }
+  </script>
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>

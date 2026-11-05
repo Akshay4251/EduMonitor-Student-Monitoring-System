@@ -11,6 +11,12 @@ const SocketClient = (() => {
     if (socket && socket.connected) disconnect();
 
     currentSessionId = sessionId;
+
+    if (typeof io === 'undefined') {
+      console.warn('[Socket] Socket.IO client library is not loaded. Real-time updates disabled.');
+      return;
+    }
+
     const socketUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000'))
       ? 'http://127.0.0.1:5000'
       : undefined;

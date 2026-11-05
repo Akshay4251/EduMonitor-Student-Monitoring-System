@@ -788,9 +788,21 @@ async function initSession(sessionId) {
     container.innerHTML = buildSessionUI(session);
 
     // Init sub-modules with resolved session ID
-    SocketClient.connect(resolvedId);
-    VideoManager.init(resolvedId);
-    ActivityMonitor.start(resolvedId);
+    try {
+      SocketClient.connect(resolvedId);
+    } catch (e) {
+      console.warn('[Session] Socket connect error:', e);
+    }
+    try {
+      VideoManager.init(resolvedId);
+    } catch (e) {
+      console.warn('[Session] VideoManager init error:', e);
+    }
+    try {
+      ActivityMonitor.start(resolvedId);
+    } catch (e) {
+      console.warn('[Session] ActivityMonitor start error:', e);
+    }
 
     // Listen for broadcast start if student joined early in standby
     if (session.status === 'scheduled') {
