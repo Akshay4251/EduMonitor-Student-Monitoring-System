@@ -76,6 +76,7 @@ def register():
             'createdAt': datetime.now(timezone.utc).isoformat(),
             'active': True,
             'enrolledClasses': [],
+            'password': password,
         }
         db.collection('users').document(uid).set(user_doc, merge=True)
 

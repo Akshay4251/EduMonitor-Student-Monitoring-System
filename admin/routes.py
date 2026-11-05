@@ -13,19 +13,27 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 @require_auth
 @require_role('admin')
 def system_stats():
-    """High-level platform statistics."""
-    users   = list(db.collection('users').stream())
+    """High-level platform statistics computed dynamically from database."""
+    docs    = list(db.collection('users').stream())
     classes = list(db.collection('classes').where('active', '==', True).stream())
     sessions_live = list(db.collection('sessions').where('status', '==', 'live').stream())
     sessions_all  = list(db.collection('sessions').stream())
 
+    # Count unique users by canonical UID to avoid double-counting alias records
+    unique_users = {}
+    for d in docs:
+        u = d.to_dict()
+        uid = u.get('uid') or d.id
+        if uid not in unique_users:
+            unique_users[uid] = u
+
     role_counts = {'student': 0, 'teacher': 0, 'admin': 0}
-    for u in users:
-        r = u.to_dict().get('role', 'student')
+    for u in unique_users.values():
+        r = u.get('role', 'student')
         role_counts[r] = role_counts.get(r, 0) + 1
 
     return jsonify({
-        'totalUsers':    len(users),
+        'totalUsers':    len(unique_users),
         'roleCounts':    role_counts,
         'activeClasses': len(classes),
         'liveSessions':  len(sessions_live),
@@ -39,10 +47,20 @@ def system_stats():
 def list_users():
     docs = db.collection('users').stream()
     users = []
+    seen = set()
     for d in docs:
         u = d.to_dict()
-        u['uid'] = d.id
+        uid = u.get('uid') or d.id
+        # Skip duplicate alias representations
+        if uid in seen:
+            continue
+        if '@' in d.id and d.id != u.get('email'):
+            continue
+        seen.add(uid)
+        u['uid'] = uid
         users.append(u)
+    # Sort with newest registered users at the top!
+    users.sort(key=lambda x: x.get('createdAt', ''), reverse=True)
     return jsonify(users)
 
 

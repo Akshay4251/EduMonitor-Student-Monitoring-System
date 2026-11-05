@@ -1498,8 +1498,9 @@ async function renderAdmin() {
           <i class="fas fa-search"></i>
           <input id="admin-user-search" class="form-input" type="text" placeholder="Search accounts by name or email…" oninput="filterAdminUsers(this.value)">
         </div>
-        <div class="d-flex gap-sm">
-          <span class="text-xs text-muted" style="align-self:center; font-weight:600">${users.length} accounts indexed</span>
+        <div class="d-flex align-center gap-sm">
+          <span class="text-xs text-muted" style="font-weight:600">${users.length} accounts indexed</span>
+          <button class="btn btn-ghost btn-xs" onclick="renderAdmin()" title="Refresh directory"><i class="fas fa-sync-alt"></i> Refresh</button>
         </div>
       </div>
 

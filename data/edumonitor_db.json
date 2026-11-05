@@ -9,7 +9,7 @@
     "role": "teacher",
     "department": "Department of Computer Science",
     "title": "Faculty Chair & Professor of Computing",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -24,7 +24,7 @@
     "role": "teacher",
     "department": "Artificial Intelligence Institute",
     "title": "Associate Professor of Machine Learning",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-ai402"
@@ -38,7 +38,7 @@
     "role": "teacher",
     "department": "Software Systems Division",
     "title": "Senior Lecturer in Cloud & Distributed Systems",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-se250",
@@ -56,7 +56,7 @@
     "role": "student",
     "major": "Computer Science & Algorithms",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -76,7 +76,7 @@
     "role": "student",
     "major": "Data Science & Neural Systems",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -93,7 +93,7 @@
     "role": "student",
     "major": "Software Systems Engineering",
     "year": "Junior Class of 2027",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -109,7 +109,7 @@
     "role": "student",
     "major": "Cybersecurity & Cryptography",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -125,7 +125,7 @@
     "role": "student",
     "major": "Computer Science & Machine Intelligence",
     "year": "Junior Class of 2027",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -145,7 +145,7 @@
     "role": "admin",
     "department": "Academic Technology & Infrastructure",
     "title": "Dean of Academic Technologies",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [],
     "password": "password123"
@@ -160,7 +160,7 @@
     "role": "teacher",
     "department": "Department of Computer Science",
     "title": "Faculty Chair & Professor of Computing",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -178,7 +178,7 @@
     "role": "student",
     "major": "Computer Science & Algorithms",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -192,18 +192,18 @@
     "uid": "student-202",
     "email": "student2@example.com",
     "aliases": [
-      "student2@example.com"
+      "student@example.com"
     ],
     "displayName": "Sophia Rodriguez",
     "role": "student",
-    "major": "Data Science & Neural Systems",
+    "major": "Computer Science & Algorithms",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
       "class-ai402",
-      "class-cy310",
+      "class-se250",
       "class-cs220"
     ],
     "password": "password123"
@@ -212,16 +212,23 @@
     "uid": "admin-301",
     "email": "admin@example.com",
     "aliases": [
-      "admin@example.com"
+      "student@example.com"
     ],
     "displayName": "Dr. Arthur Vance",
     "role": "admin",
     "department": "Academic Technology & Infrastructure",
     "title": "Dean of Academic Technologies",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true,
-    "enrolledClasses": [],
-    "password": "password123"
+    "enrolledClasses": [
+      "class-101",
+      "class-ai402",
+      "class-se250",
+      "class-cs220"
+    ],
+    "password": "password123",
+    "major": "Computer Science & Algorithms",
+    "year": "Senior Class of 2026"
   },
   "classes:::class-101": {
     "id": "class-101",
@@ -239,7 +246,7 @@
       "student-204",
       "student-205"
     ],
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true
   },
   "classes:::class-ai402": {
@@ -256,7 +263,7 @@
       "student-202",
       "student-205"
     ],
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true
   },
   "classes:::class-se250": {
@@ -273,7 +280,7 @@
       "student-203",
       "student-204"
     ],
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true
   },
   "classes:::class-cy310": {
@@ -290,7 +297,7 @@
       "student-204",
       "student-205"
     ],
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true
   },
   "classes:::class-cs220": {
@@ -308,7 +315,7 @@
       "student-203",
       "student-205"
     ],
-    "createdAt": "2026-11-05T09:32:00.299960+00:00",
+    "createdAt": "2026-11-05T10:54:04.692772+00:00",
     "active": true
   },
   "sessions:::session-001": {
@@ -319,8 +326,8 @@
     "teacherName": "Dr. Robert Anderson",
     "title": "Live Lecture: Dynamic Programming on DAGs & Bellman-Ford Solvers",
     "description": "Examining topological relaxation, negative cycle detection, and real-time student engagement analysis.",
-    "scheduledAt": "2026-11-05T09:32:00.299960+00:00",
-    "startedAt": "2026-11-05T09:32:00.299960+00:00",
+    "scheduledAt": "2026-11-05T10:54:04.692772+00:00",
+    "startedAt": "2026-11-05T10:54:04.692772+00:00",
     "endedAt": null,
     "status": "live",
     "joinCode": "BST001",
@@ -330,7 +337,7 @@
       "student-203",
       "student-204"
     ],
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "sessions:::session-002": {
     "id": "session-002",
@@ -408,14 +415,14 @@
     "status": "scheduled",
     "joinCode": "RAFT50",
     "participants": [],
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "sessions:::session-001:::attendance:::student-201": {
     "uid": "student-201",
     "name": "Liam Chen",
-    "joinTime": "2026-11-05T09:32:00.299960+00:00",
+    "joinTime": "2026-11-05T10:54:04.692772+00:00",
     "leaveTime": null,
-    "duration": 1800,
+    "duration": 3600,
     "status": "present"
   },
   "sessions:::session-001:::activity:::student-201": {
@@ -441,9 +448,9 @@
   "sessions:::session-001:::attendance:::student-202": {
     "uid": "student-202",
     "name": "Sophia Rodriguez",
-    "joinTime": "2026-11-05T09:32:00.299960+00:00",
+    "joinTime": "2026-11-05T10:54:04.692772+00:00",
     "leaveTime": null,
-    "duration": 1800,
+    "duration": 3600,
     "status": "present"
   },
   "sessions:::session-001:::activity:::student-202": {
@@ -469,9 +476,9 @@
   "sessions:::session-001:::attendance:::student-203": {
     "uid": "student-203",
     "name": "Ethan Wright",
-    "joinTime": "2026-11-05T09:32:00.299960+00:00",
+    "joinTime": "2026-11-05T10:54:04.692772+00:00",
     "leaveTime": null,
-    "duration": 1800,
+    "duration": 3600,
     "status": "present"
   },
   "sessions:::session-001:::activity:::student-203": {
@@ -497,9 +504,9 @@
   "sessions:::session-001:::attendance:::student-204": {
     "uid": "student-204",
     "name": "Aisha Patel",
-    "joinTime": "2026-11-05T09:32:00.299960+00:00",
+    "joinTime": "2026-11-05T10:54:04.692772+00:00",
     "leaveTime": null,
-    "duration": 1800,
+    "duration": 3600,
     "status": "present"
   },
   "sessions:::session-001:::activity:::student-204": {
@@ -525,9 +532,9 @@
   "sessions:::session-001:::attendance:::student-205": {
     "uid": "student-205",
     "name": "Noah Kim",
-    "joinTime": "2026-11-05T09:32:00.299960+00:00",
+    "joinTime": "2026-11-05T10:54:04.692772+00:00",
     "leaveTime": null,
-    "duration": 1800,
+    "duration": 3600,
     "status": "present"
   },
   "sessions:::session-001:::activity:::student-205": {
@@ -1025,7 +1032,7 @@
     "dueDate": "2026-11-20T23:59:00Z",
     "points": 100,
     "resources": "https://docs.python.org/3/library/heapq.html",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "assignments:::assign-001:::submissions:::student-201": {
     "studentId": "student-201",
@@ -1036,11 +1043,11 @@
     "content": "Implemented both Dijkstra with min-heap O((V+E) log V) and Bellman-Ford with early termination. Added 24 unit test cases verifying negative cycle detection.",
     "attachmentUrl": "https://github.com/liamchen/algorithms-shortest-paths",
     "submissionUrl": "https://github.com/liamchen/algorithms-shortest-paths",
-    "submittedAt": "2026-11-05T09:32:00.299960+00:00",
+    "submittedAt": "2026-11-05T10:54:04.692772+00:00",
     "status": "graded",
     "grade": 98.0,
     "remarks": "Outstanding tree traversal and shortest path implementation! Elegant recursion, efficient priority queue indexing, and clean time complexity.",
-    "reviewedAt": "2026-11-05T09:32:00.299960+00:00",
+    "reviewedAt": "2026-11-05T10:54:04.692772+00:00",
     "reviewedBy": "teacher-101"
   },
   "assignments:::assign-001:::submissions:::student-202": {
@@ -1052,11 +1059,11 @@
     "content": "Constructed adjacency list graph representation with heap-based Dijkstra. Tested on random Erd\u0151s\u2013R\u00e9nyi graphs.",
     "attachmentUrl": "https://github.com/sophia-rodriguez/shortest-path-lab",
     "submissionUrl": "https://github.com/sophia-rodriguez/shortest-path-lab",
-    "submittedAt": "2026-11-05T09:32:00.299960+00:00",
+    "submittedAt": "2026-11-05T10:54:04.692772+00:00",
     "status": "graded",
     "grade": 94.0,
     "remarks": "Great relaxation logic and clean edge case handling for disconnected subgraphs. Well-structured test coverage.",
-    "reviewedAt": "2026-11-05T09:32:00.299960+00:00",
+    "reviewedAt": "2026-11-05T10:54:04.692772+00:00",
     "reviewedBy": "teacher-101"
   },
   "assignments:::assign-002": {
@@ -1070,7 +1077,7 @@
     "dueDate": "2026-11-24T23:59:00Z",
     "points": 100,
     "resources": "https://numpy.org/doc/stable/reference/routines.linalg.html",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "assignments:::assign-002:::submissions:::student-201": {
     "studentId": "student-201",
@@ -1081,11 +1088,11 @@
     "content": "Fully vectorized matrix multiplication with batch normalization and Xavier weight initialization. Achieved 97.4% test set accuracy.",
     "attachmentUrl": "https://github.com/liamchen/numpy-deep-neural-net",
     "submissionUrl": "https://github.com/liamchen/numpy-deep-neural-net",
-    "submittedAt": "2026-11-05T09:32:00.299960+00:00",
+    "submittedAt": "2026-11-05T10:54:04.692772+00:00",
     "status": "graded",
     "grade": 97.0,
     "remarks": "Vectorized gradient computations were exceptionally clean. Adam optimizer momentum updates verified without loops.",
-    "reviewedAt": "2026-11-05T09:32:00.299960+00:00",
+    "reviewedAt": "2026-11-05T10:54:04.692772+00:00",
     "reviewedBy": "teacher-102"
   },
   "assignments:::assign-003": {
@@ -1099,7 +1106,7 @@
     "dueDate": "2026-11-27T23:59:00Z",
     "points": 150,
     "resources": "https://raft.github.io/",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "assignments:::assign-003:::submissions:::student-201": {
     "studentId": "student-201",
@@ -1110,11 +1117,11 @@
     "content": "Engineered append-only WAL with CRC32 checksums, background fsync thread, and binary log segmentation. Passed 10,000 req/sec benchmark.",
     "attachmentUrl": "https://github.com/liamchen/lsm-wal-engine",
     "submissionUrl": "https://github.com/liamchen/lsm-wal-engine",
-    "submittedAt": "2026-11-05T09:32:00.299960+00:00",
+    "submittedAt": "2026-11-05T10:54:04.692772+00:00",
     "status": "graded",
     "grade": 146.0,
     "remarks": "Superb crash recovery testing suite. Zero data corruption during simulated SIGKILL interruptions and high concurrency.",
-    "reviewedAt": "2026-11-05T09:32:00.299960+00:00",
+    "reviewedAt": "2026-11-05T10:54:04.692772+00:00",
     "reviewedBy": "teacher-103"
   },
   "assignments:::assign-004": {
@@ -1128,7 +1135,7 @@
     "dueDate": "2026-11-29T23:59:00Z",
     "points": 100,
     "resources": "https://www.rfc-editor.org/rfc/rfc8446",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "assignments:::assign-004:::submissions:::student-204": {
     "studentId": "student-204",
@@ -1139,11 +1146,11 @@
     "content": "Deconstructed client hello extensions, KeyShare entries, and verified ChaCha20-Poly1305 authenticated payload encryption.",
     "attachmentUrl": "https://github.com/aisha-patel/tls13-packet-audit",
     "submissionUrl": "https://github.com/aisha-patel/tls13-packet-audit",
-    "submittedAt": "2026-11-05T09:32:00.299960+00:00",
+    "submittedAt": "2026-11-05T10:54:04.692772+00:00",
     "status": "graded",
     "grade": 96.0,
     "remarks": "Thorough cryptographic analysis. Accurate explanation of 0-RTT early data security trade-offs.",
-    "reviewedAt": "2026-11-05T09:32:00.299960+00:00",
+    "reviewedAt": "2026-11-05T10:54:04.692772+00:00",
     "reviewedBy": "teacher-101"
   },
   "assignments:::assign-005": {
@@ -1157,7 +1164,7 @@
     "dueDate": "2026-12-02T23:59:00Z",
     "points": 100,
     "resources": "https://socket.io/docs/v4/",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "materials:::mat-001": {
     "id": "mat-001",
@@ -1170,7 +1177,7 @@
     "url": "https://www.youtube.com/watch?v=2E7MmKv0Y24",
     "youtubeId": "2E7MmKv0Y24",
     "content": "Comprehensive MIT OpenCourseWare lecture covering single-source shortest path, priority queues with Fibonacci heaps, and cycle handling.",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "materials:::mat-002": {
     "id": "mat-002",
@@ -1183,7 +1190,7 @@
     "url": "https://www.youtube.com/watch?v=UzxYlbK2c7E",
     "youtubeId": "UzxYlbK2c7E",
     "content": "Stanford University lecture on activation functions, gradient descent optimization, backpropagation dynamics, and multi-layer perceptrons.",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "materials:::mat-003": {
     "id": "mat-003",
@@ -1196,7 +1203,7 @@
     "url": "",
     "youtubeId": "",
     "content": "Core Architectural Principles:\n1. Leader Election: Heartbeat timeouts (150-300ms) prevent split-brain elections.\n2. Log Replication: Entries committed once majority of cluster acknowledges.\n3. Safety: Leaders only commit entries from current term by counting replicas.\n4. Log Compaction: Snapshots discard obsolete transaction histories.\n\nKey Reference: Ongaro & Ousterhout (Stanford University, 2014).",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "materials:::mat-004": {
     "id": "mat-004",
@@ -1209,7 +1216,7 @@
     "url": "",
     "youtubeId": "",
     "content": "Cryptographic Selection Guidelines:\n- Symmetric Encryption: AES-256-GCM or ChaCha20-Poly1305 (Authenticated Encryption)\n- Key Exchange: ECDH using Curve25519 (X25519)\n- Digital Signatures: Ed25519 or ECDSA with P-256\n- Password Hashing: Argon2id (memory-hard, resistant to GPU attacks)\n- MACs: HMAC-SHA256 or BLAKE3",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   },
   "materials:::mat-005": {
     "id": "mat-005",
@@ -1222,6 +1229,6 @@
     "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
     "youtubeId": "",
     "content": "Architectural blueprint for building resilient sub-50ms duplex communication between browsers and distributed backend clusters.",
-    "createdAt": "2026-11-05T09:32:00.299960+00:00"
+    "createdAt": "2026-11-05T10:54:04.692772+00:00"
   }
 }

@@ -40,6 +40,24 @@ if not USE_MOCK:
         except Exception as e:
             print(f"[Firebase Warning] Error initializing Firebase custom path: {e}. Falling back to local mode.")
             USE_MOCK = True
+    elif os.getenv('FIREBASE_PRIVATE_KEY') and os.getenv('FIREBASE_CLIENT_EMAIL'):
+        try:
+            pk = os.getenv('FIREBASE_PRIVATE_KEY', '').replace('\\n', '\n')
+            cred_dict = {
+                "type": "service_account",
+                "project_id": os.getenv("FIREBASE_PROJECT_ID"),
+                "private_key": pk,
+                "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
+                "token_uri": "https://oauth2.googleapis.com/token",
+            }
+            _cred = credentials.Certificate(cred_dict)
+            firebase_admin.initialize_app(_cred)
+            db = firestore.client()
+            firebase_auth = firebase_auth_module
+            print(f"[Firebase] Connected to Firebase Admin SDK via .env service account credentials for project: {os.getenv('FIREBASE_PROJECT_ID')}.")
+        except Exception as e:
+            print(f"[Firebase Warning] Error initializing .env credentials: {e}. Falling back to local mode.")
+            USE_MOCK = True
     elif _service_account_json:
         try:
             import json
@@ -67,6 +85,14 @@ if not USE_MOCK:
 def _bootstrap_live_firebase(firestore_db, auth_mod):
     """Auto-seed real academic baseline dataset on live Firebase projects."""
     try:
+        # Check if already seeded to prevent slow startup
+        try:
+            sample_class = firestore_db.collection('classes').document('class-101').get()
+            if sample_class.exists:
+                print("[Firebase] Live Firebase project is already populated with academic data.")
+                return
+        except Exception:
+            pass
         import copy
         from datetime import datetime, timezone
         from seed_data import get_seed_data
