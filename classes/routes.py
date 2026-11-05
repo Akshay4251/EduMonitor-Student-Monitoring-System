@@ -137,12 +137,14 @@ def list_teacher_students():
         cid = cd.id
         classes_map[cid] = cdata
         for sid in cdata.get('students', []):
-            student_classes.setdefault(sid, []).append({
-                'id': cid,
-                'name': cdata.get('name', 'Untitled Class'),
-                'subject': cdata.get('subject', ''),
-                'joinCode': cdata.get('joinCode', ''),
-            })
+            existing_cids = {c['id'] for c in student_classes.get(sid, [])}
+            if cid not in existing_cids:
+                student_classes.setdefault(sid, []).append({
+                    'id': cid,
+                    'name': cdata.get('name', 'Untitled Class'),
+                    'subject': cdata.get('subject', ''),
+                    'joinCode': cdata.get('joinCode', ''),
+                })
 
     # 2. For each student, get profile + calculate summary metrics
     students = []
@@ -231,15 +233,18 @@ def get_teacher_student_detail(student_uid):
         class_docs = list(db.collection('classes').where('teacherId', '==', g.uid).where('active', '==', True).stream())
 
     enrolled_classes = []
+    seen_cids = set()
     for cd in class_docs:
         cdata = cd.to_dict()
         if student_uid in cdata.get('students', []):
-            enrolled_classes.append({
-                'id': cd.id,
-                'name': cdata.get('name', 'Untitled Class'),
-                'subject': cdata.get('subject', ''),
-                'joinCode': cdata.get('joinCode', ''),
-            })
+            if cd.id not in seen_cids:
+                seen_cids.add(cd.id)
+                enrolled_classes.append({
+                    'id': cd.id,
+                    'name': cdata.get('name', 'Untitled Class'),
+                    'subject': cdata.get('subject', ''),
+                    'joinCode': cdata.get('joinCode', ''),
+                })
 
     # 2. Session history
     try:

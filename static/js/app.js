@@ -1831,16 +1831,43 @@ function renderStudentCardsList(students) {
 
 function renderStudentCard(s) {
   const initial = (s.name || s.email || 'S')[0].toUpperCase();
-  const classesList = (s.classes || []).map(c => `<span class="badge badge--info">${escapeHTML(c.name)}</span>`).join(' ') || '<span class="text-xs text-muted">No classes enrolled</span>';
+
+  // Deduplicate enrolled classes by course name
+  const uniqueClasses = [];
+  const seenNames = new Set();
+  (s.classes || []).forEach(c => {
+    const key = (c.name || '').trim();
+    if (key && !seenNames.has(key)) {
+      seenNames.add(key);
+      uniqueClasses.push(c);
+    }
+  });
+
+  const MAX_BADGES = 3;
+  let classesBadges = '';
+  if (uniqueClasses.length === 0) {
+    classesBadges = '<span class="text-xs text-muted">No classes enrolled</span>';
+  } else {
+    const visible = uniqueClasses.slice(0, MAX_BADGES);
+    const extraCount = uniqueClasses.length - MAX_BADGES;
+    classesBadges = visible.map(c => `<span class="badge badge--info" title="${escapeHTML(c.name)}">${escapeHTML(c.name)}</span>`).join('');
+    if (extraCount > 0) {
+      const remainingNames = uniqueClasses.slice(MAX_BADGES).map(c => escapeHTML(c.name)).join(', ');
+      classesBadges += `<span class="badge badge--neutral" title="${remainingNames}" style="cursor:help;">+${extraCount} more</span>`;
+    }
+  }
+
+  const attRate = Math.min(100, Math.max(0, Math.round(s.attendanceRate || 0)));
+  const focusIdx = Math.min(100, Math.max(0, Math.round(s.focusIndex || 0)));
 
   return `
-    <div class="card cursor-pointer" onclick="viewStudentDetail('${s.uid}')" style="display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s, box-shadow 0.2s;">
+    <div class="card cursor-pointer" onclick="viewStudentDetail('${s.uid}')" style="display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s, box-shadow 0.2s; overflow:hidden; box-sizing:border-box;">
       <div>
         <div class="d-flex align-center gap-md mb-md">
-          <div class="header__avatar" style="width:48px; height:48px; font-size:1.25rem; background:var(--primary); color:#ffffff; font-weight:700;">
+          <div class="header__avatar" style="width:48px; height:48px; font-size:1.25rem; background:var(--primary); color:#ffffff; font-weight:700; flex-shrink:0;">
             ${initial}
           </div>
-          <div style="overflow:hidden;">
+          <div style="overflow:hidden; min-width:0; flex:1;">
             <h4 class="card__title" style="margin-bottom:2px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${escapeHTML(s.name || 'Student')}</h4>
             <div class="text-xs text-muted font-mono" style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${escapeHTML(s.email)}</div>
           </div>
@@ -1848,22 +1875,22 @@ function renderStudentCard(s) {
 
         <div class="mb-sm">
           <div class="text-xs text-muted fw-700 uppercase mb-xs" style="font-size:0.65rem; letter-spacing:0.05em">Enrolled Courses</div>
-          <div class="d-flex flex-wrap gap-xs">${classesList}</div>
+          <div class="d-flex flex-wrap gap-xs" style="max-width:100%; overflow:hidden;">${classesBadges}</div>
         </div>
 
-        <div class="grid-2 gap-sm my-md p-sm" style="background:var(--muted); border-radius:var(--radius); border:1px solid var(--border);">
-          <div>
-            <div class="text-xs text-muted">Attendance Rate</div>
-            <div class="fw-700 fs-md text-primary mt-xs">${s.attendanceRate || 0}%</div>
-            <div class="progress-bar mt-xs" style="height:4px; background:var(--border); border-radius:2px; overflow:hidden;">
-              <div style="width:${s.attendanceRate || 0}%; height:100%; background:var(--primary);"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-sm); margin:var(--space-md) 0; padding:var(--space-sm); background:var(--muted); border-radius:var(--radius); border:1px solid var(--border); box-sizing:border-box; width:100%; max-width:100%; overflow:hidden;">
+          <div style="min-width:0; overflow:hidden;">
+            <div class="text-xs text-muted" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Attendance Rate</div>
+            <div class="fw-700 fs-md text-primary mt-xs">${attRate}%</div>
+            <div class="progress-bar mt-xs" style="height:4px; background:var(--border); border-radius:2px; overflow:hidden; width:100%;">
+              <div style="width:${attRate}%; height:100%; background:var(--primary);"></div>
             </div>
           </div>
-          <div>
-            <div class="text-xs text-muted">Focus Index</div>
-            <div class="fw-700 fs-md text-success mt-xs">${s.focusIndex || 0}%</div>
-            <div class="progress-bar mt-xs" style="height:4px; background:var(--border); border-radius:2px; overflow:hidden;">
-              <div style="width:${s.focusIndex || 0}%; height:100%; background:var(--color-chart-2);"></div>
+          <div style="min-width:0; overflow:hidden;">
+            <div class="text-xs text-muted" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Focus Index</div>
+            <div class="fw-700 fs-md text-success mt-xs">${focusIdx}%</div>
+            <div class="progress-bar mt-xs" style="height:4px; background:var(--border); border-radius:2px; overflow:hidden; width:100%;">
+              <div style="width:${focusIdx}%; height:100%; background:var(--color-chart-2);"></div>
             </div>
           </div>
         </div>
@@ -1918,7 +1945,16 @@ async function viewStudentDetail(studentUid) {
   try {
     const student = await Auth.apiFetch(`/api/classes/teacher/students/${studentUid}`);
     const initial = (student.name || student.email || 'S')[0].toUpperCase();
-    const enrolledNames = (student.classes || []).map(c => `<span class="badge badge--primary">${escapeHTML(c.name)}</span>`).join(' ') || '<span class="text-xs text-muted">None</span>';
+    const uniqueStudentClasses = [];
+    const seenDossierNames = new Set();
+    (student.classes || []).forEach(c => {
+      const key = (c.name || '').trim();
+      if (key && !seenDossierNames.has(key)) {
+        seenDossierNames.add(key);
+        uniqueStudentClasses.push(c);
+      }
+    });
+    const enrolledNames = uniqueStudentClasses.map(c => `<span class="badge badge--primary">${escapeHTML(c.name)}</span>`).join(' ') || '<span class="text-xs text-muted">None</span>';
 
     const sessions = student.sessions || [];
     const submissions = student.submissions || [];
@@ -2555,8 +2591,8 @@ function renderMaterialCard(m, isTeacher) {
   } else {
     typeBadge = '<span class="badge badge--info"><i class="fas fa-file-alt"></i> Reference Resource</span>';
     previewArea = `
-      <div class="p-sm mb-sm text-xs text-muted" style="background:var(--muted); border-radius:var(--radius);">
-        <i class="fas fa-link text-primary mr-xs"></i> ${escapeHTML(m.url || 'Online Reference Link')}
+      <div class="p-sm mb-sm text-xs text-muted" style="background:var(--muted); border-radius:var(--radius); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+        <i class="fas fa-link text-primary mr-xs"></i> <a href="${escapeHTML(m.url || '#')}" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:underline;">${escapeHTML(m.url || 'Online Reference Link')}</a>
       </div>
     `;
   }

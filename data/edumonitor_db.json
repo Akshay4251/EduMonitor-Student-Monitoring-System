@@ -9,7 +9,7 @@
     "role": "teacher",
     "department": "Department of Computer Science",
     "title": "Faculty Chair & Professor of Computing",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -24,7 +24,7 @@
     "role": "teacher",
     "department": "Artificial Intelligence Institute",
     "title": "Associate Professor of Machine Learning",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-ai402"
@@ -38,7 +38,7 @@
     "role": "teacher",
     "department": "Software Systems Division",
     "title": "Senior Lecturer in Cloud & Distributed Systems",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-se250",
@@ -56,17 +56,13 @@
     "role": "student",
     "major": "Computer Science & Algorithms",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
       "class-ai402",
       "class-se250",
-      "class-cs220",
-      "f492d07b",
-      "c28f5244",
-      "c8732e31",
-      "dc510631"
+      "class-cs220"
     ],
     "password": "password123"
   },
@@ -80,7 +76,7 @@
     "role": "student",
     "major": "Data Science & Neural Systems",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -97,7 +93,7 @@
     "role": "student",
     "major": "Software Systems Engineering",
     "year": "Junior Class of 2027",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -113,7 +109,7 @@
     "role": "student",
     "major": "Cybersecurity & Cryptography",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -129,7 +125,7 @@
     "role": "student",
     "major": "Computer Science & Machine Intelligence",
     "year": "Junior Class of 2027",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -149,7 +145,7 @@
     "role": "admin",
     "department": "Academic Technology & Infrastructure",
     "title": "Dean of Academic Technologies",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [],
     "password": "password123"
@@ -164,7 +160,7 @@
     "role": "teacher",
     "department": "Department of Computer Science",
     "title": "Faculty Chair & Professor of Computing",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -182,7 +178,7 @@
     "role": "student",
     "major": "Computer Science & Algorithms",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -202,7 +198,7 @@
     "role": "student",
     "major": "Data Science & Neural Systems",
     "year": "Senior Class of 2026",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [
       "class-101",
@@ -222,7 +218,7 @@
     "role": "admin",
     "department": "Academic Technology & Infrastructure",
     "title": "Dean of Academic Technologies",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true,
     "enrolledClasses": [],
     "password": "password123"
@@ -245,7 +241,7 @@
       "student@example.com",
       "student2@example.com"
     ],
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true
   },
   "classes:::class-ai402": {
@@ -262,7 +258,7 @@
       "student-202",
       "student-205"
     ],
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true
   },
   "classes:::class-se250": {
@@ -279,7 +275,7 @@
       "student-203",
       "student-204"
     ],
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true
   },
   "classes:::class-cy310": {
@@ -296,7 +292,7 @@
       "student-204",
       "student-205"
     ],
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true
   },
   "classes:::class-cs220": {
@@ -314,7 +310,7 @@
       "student-203",
       "student-205"
     ],
-    "createdAt": "2026-11-05T07:55:19.304497+00:00",
+    "createdAt": "2026-11-05T08:32:38.921935+00:00",
     "active": true
   },
   "sessions:::session-001": {
@@ -325,8 +321,8 @@
     "teacherName": "Dr. Robert Anderson",
     "title": "Live Lecture: Dynamic Programming on DAGs & Bellman-Ford Solvers",
     "description": "Examining topological relaxation, negative cycle detection, and real-time student engagement analysis.",
-    "scheduledAt": "2026-11-05T07:55:19.304497+00:00",
-    "startedAt": "2026-11-05T07:55:19.304497+00:00",
+    "scheduledAt": "2026-11-05T08:32:38.921935+00:00",
+    "startedAt": "2026-11-05T08:32:38.921935+00:00",
     "endedAt": null,
     "status": "live",
     "joinCode": "BST001",
@@ -336,7 +332,7 @@
       "student-203",
       "student-204"
     ],
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "sessions:::session-002": {
     "id": "session-002",
@@ -414,27 +410,26 @@
     "status": "scheduled",
     "joinCode": "RAFT50",
     "participants": [],
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "sessions:::session-001:::attendance:::student-201": {
     "uid": "student-201",
-    "name": "Alex Rivera",
-    "joinTime": "2026-11-05T08:05:46.960182+00:00",
-    "leaveTime": "2026-11-05T08:05:46.972270+00:00",
-    "duration": 0.012099,
+    "name": "Liam Chen",
+    "joinTime": "2026-11-05T08:32:38.921935+00:00",
+    "leaveTime": null,
+    "duration": 1800,
     "status": "present"
   },
   "sessions:::session-001:::activity:::student-201": {
     "uid": "student-201",
-    "tabSwitchCount": 0,
-    "tabAwayDuration": 0,
-    "idleDuration": 0,
-    "faceDetectedDuration": 0,
-    "chatCount": 1,
-    "pollResponses": 0,
-    "quizResponses": 0,
-    "handRaiseCount": 1,
-    "flushedAt": "2026-11-05T08:05:46.977711+00:00"
+    "tabSwitchCount": 1,
+    "tabAwayDuration": 35,
+    "idleDuration": 45,
+    "faceDetectedDuration": 3450,
+    "chatCount": 7,
+    "pollResponses": 3,
+    "quizResponses": 2,
+    "handRaiseCount": 1
   },
   "sessions:::session-001:::engagement:::student-201": {
     "uid": "student-201",
@@ -448,7 +443,7 @@
   "sessions:::session-001:::attendance:::student-202": {
     "uid": "student-202",
     "name": "Sophia Rodriguez",
-    "joinTime": "2026-11-05T07:55:19.304497+00:00",
+    "joinTime": "2026-11-05T08:32:38.921935+00:00",
     "leaveTime": null,
     "duration": 1800,
     "status": "present"
@@ -476,7 +471,7 @@
   "sessions:::session-001:::attendance:::student-203": {
     "uid": "student-203",
     "name": "Ethan Wright",
-    "joinTime": "2026-11-05T07:55:19.304497+00:00",
+    "joinTime": "2026-11-05T08:32:38.921935+00:00",
     "leaveTime": null,
     "duration": 1800,
     "status": "present"
@@ -504,7 +499,7 @@
   "sessions:::session-001:::attendance:::student-204": {
     "uid": "student-204",
     "name": "Aisha Patel",
-    "joinTime": "2026-11-05T07:55:19.304497+00:00",
+    "joinTime": "2026-11-05T08:32:38.921935+00:00",
     "leaveTime": null,
     "duration": 1800,
     "status": "present"
@@ -532,7 +527,7 @@
   "sessions:::session-001:::attendance:::student-205": {
     "uid": "student-205",
     "name": "Noah Kim",
-    "joinTime": "2026-11-05T07:55:19.304497+00:00",
+    "joinTime": "2026-11-05T08:32:38.921935+00:00",
     "leaveTime": null,
     "duration": 1800,
     "status": "present"
@@ -1003,7 +998,7 @@
         "answer": 1
       }
     ],
-    "createdAt": "2026-11-05T07:55:19.304614+00:00"
+    "createdAt": "2026-11-05T08:32:38.921982+00:00"
   },
   "sessions:::session-001:::polls:::poll-001": {
     "id": "poll-001",
@@ -1019,7 +1014,7 @@
       "student-202": 0,
       "student-203": 1
     },
-    "createdAt": "2026-11-05T07:55:19.304614+00:00"
+    "createdAt": "2026-11-05T08:32:38.921982+00:00"
   },
   "assignments:::assign-001": {
     "id": "assign-001",
@@ -1032,7 +1027,7 @@
     "dueDate": "2026-11-20T23:59:00Z",
     "points": 100,
     "resources": "https://docs.python.org/3/library/heapq.html",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "assignments:::assign-001:::submissions:::student-201": {
     "studentId": "student-201",
@@ -1043,11 +1038,11 @@
     "content": "Implemented both Dijkstra with min-heap O((V+E) log V) and Bellman-Ford with early termination. Added 24 unit test cases verifying negative cycle detection.",
     "attachmentUrl": "https://github.com/liamchen/algorithms-shortest-paths",
     "submissionUrl": "https://github.com/liamchen/algorithms-shortest-paths",
-    "submittedAt": "2026-11-05T07:55:19.304497+00:00",
+    "submittedAt": "2026-11-05T08:32:38.921935+00:00",
     "status": "graded",
     "grade": 98.0,
     "remarks": "Outstanding tree traversal and shortest path implementation! Elegant recursion, efficient priority queue indexing, and clean time complexity.",
-    "reviewedAt": "2026-11-05T07:55:19.304497+00:00",
+    "reviewedAt": "2026-11-05T08:32:38.921935+00:00",
     "reviewedBy": "teacher-101"
   },
   "assignments:::assign-001:::submissions:::student-202": {
@@ -1059,11 +1054,11 @@
     "content": "Constructed adjacency list graph representation with heap-based Dijkstra. Tested on random Erd\u0151s\u2013R\u00e9nyi graphs.",
     "attachmentUrl": "https://github.com/sophia-rodriguez/shortest-path-lab",
     "submissionUrl": "https://github.com/sophia-rodriguez/shortest-path-lab",
-    "submittedAt": "2026-11-05T07:55:19.304497+00:00",
+    "submittedAt": "2026-11-05T08:32:38.921935+00:00",
     "status": "graded",
     "grade": 94.0,
     "remarks": "Great relaxation logic and clean edge case handling for disconnected subgraphs. Well-structured test coverage.",
-    "reviewedAt": "2026-11-05T07:55:19.304497+00:00",
+    "reviewedAt": "2026-11-05T08:32:38.921935+00:00",
     "reviewedBy": "teacher-101"
   },
   "assignments:::assign-002": {
@@ -1077,7 +1072,7 @@
     "dueDate": "2026-11-24T23:59:00Z",
     "points": 100,
     "resources": "https://numpy.org/doc/stable/reference/routines.linalg.html",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "assignments:::assign-002:::submissions:::student-201": {
     "studentId": "student-201",
@@ -1088,11 +1083,11 @@
     "content": "Fully vectorized matrix multiplication with batch normalization and Xavier weight initialization. Achieved 97.4% test set accuracy.",
     "attachmentUrl": "https://github.com/liamchen/numpy-deep-neural-net",
     "submissionUrl": "https://github.com/liamchen/numpy-deep-neural-net",
-    "submittedAt": "2026-11-05T07:55:19.304497+00:00",
+    "submittedAt": "2026-11-05T08:32:38.921935+00:00",
     "status": "graded",
     "grade": 97.0,
     "remarks": "Vectorized gradient computations were exceptionally clean. Adam optimizer momentum updates verified without loops.",
-    "reviewedAt": "2026-11-05T07:55:19.304497+00:00",
+    "reviewedAt": "2026-11-05T08:32:38.921935+00:00",
     "reviewedBy": "teacher-102"
   },
   "assignments:::assign-003": {
@@ -1106,7 +1101,7 @@
     "dueDate": "2026-11-27T23:59:00Z",
     "points": 150,
     "resources": "https://raft.github.io/",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "assignments:::assign-003:::submissions:::student-201": {
     "studentId": "student-201",
@@ -1117,11 +1112,11 @@
     "content": "Engineered append-only WAL with CRC32 checksums, background fsync thread, and binary log segmentation. Passed 10,000 req/sec benchmark.",
     "attachmentUrl": "https://github.com/liamchen/lsm-wal-engine",
     "submissionUrl": "https://github.com/liamchen/lsm-wal-engine",
-    "submittedAt": "2026-11-05T07:55:19.304497+00:00",
+    "submittedAt": "2026-11-05T08:32:38.921935+00:00",
     "status": "graded",
     "grade": 146.0,
     "remarks": "Superb crash recovery testing suite. Zero data corruption during simulated SIGKILL interruptions and high concurrency.",
-    "reviewedAt": "2026-11-05T07:55:19.304497+00:00",
+    "reviewedAt": "2026-11-05T08:32:38.921935+00:00",
     "reviewedBy": "teacher-103"
   },
   "assignments:::assign-004": {
@@ -1135,7 +1130,7 @@
     "dueDate": "2026-11-29T23:59:00Z",
     "points": 100,
     "resources": "https://www.rfc-editor.org/rfc/rfc8446",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "assignments:::assign-004:::submissions:::student-204": {
     "studentId": "student-204",
@@ -1146,11 +1141,11 @@
     "content": "Deconstructed client hello extensions, KeyShare entries, and verified ChaCha20-Poly1305 authenticated payload encryption.",
     "attachmentUrl": "https://github.com/aisha-patel/tls13-packet-audit",
     "submissionUrl": "https://github.com/aisha-patel/tls13-packet-audit",
-    "submittedAt": "2026-11-05T07:55:19.304497+00:00",
+    "submittedAt": "2026-11-05T08:32:38.921935+00:00",
     "status": "graded",
     "grade": 96.0,
     "remarks": "Thorough cryptographic analysis. Accurate explanation of 0-RTT early data security trade-offs.",
-    "reviewedAt": "2026-11-05T07:55:19.304497+00:00",
+    "reviewedAt": "2026-11-05T08:32:38.921935+00:00",
     "reviewedBy": "teacher-101"
   },
   "assignments:::assign-005": {
@@ -1164,7 +1159,7 @@
     "dueDate": "2026-12-02T23:59:00Z",
     "points": 100,
     "resources": "https://socket.io/docs/v4/",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "materials:::mat-001": {
     "id": "mat-001",
@@ -1177,7 +1172,7 @@
     "url": "https://www.youtube.com/watch?v=2E7MmKv0Y24",
     "youtubeId": "2E7MmKv0Y24",
     "content": "Comprehensive MIT OpenCourseWare lecture covering single-source shortest path, priority queues with Fibonacci heaps, and cycle handling.",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "materials:::mat-002": {
     "id": "mat-002",
@@ -1190,7 +1185,7 @@
     "url": "https://www.youtube.com/watch?v=UzxYlbK2c7E",
     "youtubeId": "UzxYlbK2c7E",
     "content": "Stanford University lecture on activation functions, gradient descent optimization, backpropagation dynamics, and multi-layer perceptrons.",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "materials:::mat-003": {
     "id": "mat-003",
@@ -1203,7 +1198,7 @@
     "url": "",
     "youtubeId": "",
     "content": "Core Architectural Principles:\n1. Leader Election: Heartbeat timeouts (150-300ms) prevent split-brain elections.\n2. Log Replication: Entries committed once majority of cluster acknowledges.\n3. Safety: Leaders only commit entries from current term by counting replicas.\n4. Log Compaction: Snapshots discard obsolete transaction histories.\n\nKey Reference: Ongaro & Ousterhout (Stanford University, 2014).",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "materials:::mat-004": {
     "id": "mat-004",
@@ -1216,7 +1211,7 @@
     "url": "",
     "youtubeId": "",
     "content": "Cryptographic Selection Guidelines:\n- Symmetric Encryption: AES-256-GCM or ChaCha20-Poly1305 (Authenticated Encryption)\n- Key Exchange: ECDH using Curve25519 (X25519)\n- Digital Signatures: Ed25519 or ECDSA with P-256\n- Password Hashing: Argon2id (memory-hard, resistant to GPU attacks)\n- MACs: HMAC-SHA256 or BLAKE3",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   },
   "materials:::mat-005": {
     "id": "mat-005",
@@ -1229,386 +1224,6 @@
     "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
     "youtubeId": "",
     "content": "Architectural blueprint for building resilient sub-50ms duplex communication between browsers and distributed backend clusters.",
-    "createdAt": "2026-11-05T07:55:19.304497+00:00"
-  },
-  "users:::user-09a72c74": {
-    "uid": "user-09a72c74",
-    "email": "newuser_a1d946@example.com",
-    "displayName": "Test User",
-    "role": "student",
-    "active": true,
-    "createdAt": "2026-11-05T07:55:19.500543+00:00",
-    "password": "password123",
-    "enrolledClasses": []
-  },
-  "classes:::f492d07b": {
-    "id": "f492d07b",
-    "name": "Physics 101",
-    "description": "Mechanics & Optics",
-    "subject": "Physics",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "schedule": "Tue/Thu 2:00 PM",
-    "students": [
-      "student-201"
-    ],
-    "joinCode": "36C02C",
-    "createdAt": "2026-11-05T07:55:19.512114+00:00",
-    "active": true
-  },
-  "sessions:::48f56f27-3": {
-    "id": "48f56f27-3",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Test Session Alpha",
-    "description": "Testing session flow",
-    "scheduledAt": "",
-    "startedAt": "2026-11-05T07:55:19.545553+00:00",
-    "endedAt": null,
-    "status": "live",
-    "joinCode": "0A51C8",
-    "participants": [],
-    "createdAt": "2026-11-05T07:55:19.540816+00:00"
-  },
-  "sessions:::48f56f27-3:::quizzes:::70229082": {
-    "id": "70229082",
-    "title": "Pop Quiz",
-    "questions": [
-      {
-        "options": [
-          "1",
-          "2",
-          "3"
-        ],
-        "question": "1 + 1 = ?"
-      }
-    ],
-    "responses": {},
-    "active": true,
-    "duration": 300,
-    "createdAt": "2026-11-05T07:55:19.553864+00:00"
-  },
-  "sessions:::session-001:::chat:::639990d2-a": {
-    "uid": "student-201",
-    "name": "Alex Rivera",
-    "message": "Hello everyone!",
-    "timestamp": "2026-11-05T07:55:19.931725+00:00"
-  },
-  "assignments:::a923cfcc-3": {
-    "id": "a923cfcc-3",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Binary Trees Lab Assignment",
-    "description": "Implement BFS and DFS tree traversal with recursion.",
-    "dueDate": "2026-11-15T23:59:00",
-    "points": 100,
-    "resources": "",
-    "createdAt": "2026-11-05T07:55:19.993219+00:00"
-  },
-  "assignments:::a923cfcc-3:::submissions:::student-201": {
-    "studentId": "student-201",
-    "studentUid": "student-201",
-    "uid": "student-201",
-    "studentName": "Liam Chen",
-    "studentEmail": "student@example.com",
-    "assignmentId": "a923cfcc-3",
-    "content": "Completed BFS and DFS traversal algorithms. All unit tests passed.",
-    "submissionUrl": "https://github.com/student/binary-trees-solution",
-    "attachmentUrl": "https://github.com/student/binary-trees-solution",
-    "submittedAt": "2026-11-05T07:55:20.006365+00:00",
-    "status": "graded",
-    "grade": 98.0,
-    "remarks": "Outstanding tree traversal implementation! Elegant recursion and clean time complexity.",
-    "reviewedAt": "2026-11-05T07:55:20.012502+00:00",
-    "reviewedBy": "teacher-101"
-  },
-  "users:::user-7b15629a": {
-    "uid": "user-7b15629a",
-    "email": "newuser_92feff@example.com",
-    "displayName": "Test User",
-    "role": "student",
-    "active": true,
-    "createdAt": "2026-11-05T07:56:33.595987+00:00",
-    "password": "password123",
-    "enrolledClasses": []
-  },
-  "classes:::c28f5244": {
-    "id": "c28f5244",
-    "name": "Physics 101",
-    "description": "Mechanics & Optics",
-    "subject": "Physics",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "schedule": "Tue/Thu 2:00 PM",
-    "students": [
-      "student-201"
-    ],
-    "joinCode": "FFC3AC",
-    "createdAt": "2026-11-05T07:56:33.609111+00:00",
-    "active": true
-  },
-  "sessions:::73f6a04a-6": {
-    "id": "73f6a04a-6",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Test Session Alpha",
-    "description": "Testing session flow",
-    "scheduledAt": "",
-    "startedAt": "2026-11-05T07:56:33.646430+00:00",
-    "endedAt": null,
-    "status": "live",
-    "joinCode": "EC8CC1",
-    "participants": [],
-    "createdAt": "2026-11-05T07:56:33.639113+00:00"
-  },
-  "sessions:::73f6a04a-6:::quizzes:::55aa86ec": {
-    "id": "55aa86ec",
-    "title": "Pop Quiz",
-    "questions": [
-      {
-        "options": [
-          "1",
-          "2",
-          "3"
-        ],
-        "question": "1 + 1 = ?"
-      }
-    ],
-    "responses": {},
-    "active": true,
-    "duration": 300,
-    "createdAt": "2026-11-05T07:56:33.653597+00:00"
-  },
-  "sessions:::session-001:::chat:::250e6272-d": {
-    "uid": "student-201",
-    "name": "Alex Rivera",
-    "message": "Hello everyone!",
-    "timestamp": "2026-11-05T07:56:33.980677+00:00"
-  },
-  "assignments:::103a80e8-b": {
-    "id": "103a80e8-b",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Binary Trees Lab Assignment",
-    "description": "Implement BFS and DFS tree traversal with recursion.",
-    "dueDate": "2026-11-15T23:59:00",
-    "points": 100,
-    "resources": "",
-    "createdAt": "2026-11-05T07:56:34.022432+00:00"
-  },
-  "assignments:::103a80e8-b:::submissions:::student-201": {
-    "studentId": "student-201",
-    "studentUid": "student-201",
-    "uid": "student-201",
-    "studentName": "Liam Chen",
-    "studentEmail": "student@example.com",
-    "assignmentId": "103a80e8-b",
-    "content": "Completed BFS and DFS traversal algorithms. All unit tests passed.",
-    "submissionUrl": "https://github.com/student/binary-trees-solution",
-    "attachmentUrl": "https://github.com/student/binary-trees-solution",
-    "submittedAt": "2026-11-05T07:56:34.033351+00:00",
-    "status": "graded",
-    "grade": 98.0,
-    "remarks": "Outstanding tree traversal implementation! Elegant recursion and clean time complexity.",
-    "reviewedAt": "2026-11-05T07:56:34.041604+00:00",
-    "reviewedBy": "teacher-101"
-  },
-  "users:::user-df0262ce": {
-    "uid": "user-df0262ce",
-    "email": "newuser_e0741b@example.com",
-    "displayName": "Test User",
-    "role": "student",
-    "active": true,
-    "createdAt": "2026-11-05T07:58:55.679025+00:00",
-    "password": "password123",
-    "enrolledClasses": []
-  },
-  "classes:::c8732e31": {
-    "id": "c8732e31",
-    "name": "Physics 101",
-    "description": "Mechanics & Optics",
-    "subject": "Physics",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "schedule": "Tue/Thu 2:00 PM",
-    "students": [
-      "student-201"
-    ],
-    "joinCode": "6D9FC6",
-    "createdAt": "2026-11-05T07:58:55.691559+00:00",
-    "active": true
-  },
-  "sessions:::10894e1a-1": {
-    "id": "10894e1a-1",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Test Session Alpha",
-    "description": "Testing session flow",
-    "scheduledAt": "",
-    "startedAt": "2026-11-05T07:58:55.727282+00:00",
-    "endedAt": null,
-    "status": "live",
-    "joinCode": "5BEE56",
-    "participants": [],
-    "createdAt": "2026-11-05T07:58:55.721127+00:00"
-  },
-  "sessions:::10894e1a-1:::quizzes:::e6dda54d": {
-    "id": "e6dda54d",
-    "title": "Pop Quiz",
-    "questions": [
-      {
-        "options": [
-          "1",
-          "2",
-          "3"
-        ],
-        "question": "1 + 1 = ?"
-      }
-    ],
-    "responses": {},
-    "active": true,
-    "duration": 300,
-    "createdAt": "2026-11-05T07:58:55.734611+00:00"
-  },
-  "sessions:::session-001:::chat:::97784752-8": {
-    "uid": "student-201",
-    "name": "Alex Rivera",
-    "message": "Hello everyone!",
-    "timestamp": "2026-11-05T07:58:56.064134+00:00"
-  },
-  "assignments:::d3ebcfd9-7": {
-    "id": "d3ebcfd9-7",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Binary Trees Lab Assignment",
-    "description": "Implement BFS and DFS tree traversal with recursion.",
-    "dueDate": "2026-11-15T23:59:00",
-    "points": 100,
-    "resources": "",
-    "createdAt": "2026-11-05T07:58:56.108911+00:00"
-  },
-  "assignments:::d3ebcfd9-7:::submissions:::student-201": {
-    "studentId": "student-201",
-    "studentUid": "student-201",
-    "uid": "student-201",
-    "studentName": "Liam Chen",
-    "studentEmail": "student@example.com",
-    "assignmentId": "d3ebcfd9-7",
-    "content": "Completed BFS and DFS traversal algorithms. All unit tests passed.",
-    "submissionUrl": "https://github.com/student/binary-trees-solution",
-    "attachmentUrl": "https://github.com/student/binary-trees-solution",
-    "submittedAt": "2026-11-05T07:58:56.118551+00:00",
-    "status": "graded",
-    "grade": 98.0,
-    "remarks": "Outstanding tree traversal implementation! Elegant recursion and clean time complexity.",
-    "reviewedAt": "2026-11-05T07:58:56.129737+00:00",
-    "reviewedBy": "teacher-101"
-  },
-  "users:::user-642ac2bf": {
-    "uid": "user-642ac2bf",
-    "email": "newuser_0c7dbe@example.com",
-    "displayName": "Test User",
-    "role": "student",
-    "active": true,
-    "createdAt": "2026-11-05T08:05:46.561881+00:00",
-    "password": "password123",
-    "enrolledClasses": []
-  },
-  "classes:::dc510631": {
-    "id": "dc510631",
-    "name": "Physics 101",
-    "description": "Mechanics & Optics",
-    "subject": "Physics",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "schedule": "Tue/Thu 2:00 PM",
-    "students": [
-      "student-201"
-    ],
-    "joinCode": "46F4BC",
-    "createdAt": "2026-11-05T08:05:46.576702+00:00",
-    "active": true
-  },
-  "sessions:::b606081b-2": {
-    "id": "b606081b-2",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Test Session Alpha",
-    "description": "Testing session flow",
-    "scheduledAt": "",
-    "startedAt": "2026-11-05T08:05:46.615650+00:00",
-    "endedAt": null,
-    "status": "live",
-    "joinCode": "19049B",
-    "participants": [],
-    "createdAt": "2026-11-05T08:05:46.609635+00:00"
-  },
-  "sessions:::b606081b-2:::quizzes:::a2283029": {
-    "id": "a2283029",
-    "title": "Pop Quiz",
-    "questions": [
-      {
-        "options": [
-          "1",
-          "2",
-          "3"
-        ],
-        "question": "1 + 1 = ?"
-      }
-    ],
-    "responses": {},
-    "active": true,
-    "duration": 300,
-    "createdAt": "2026-11-05T08:05:46.626694+00:00"
-  },
-  "sessions:::session-001:::chat:::fcaea9ab-7": {
-    "uid": "student-201",
-    "name": "Alex Rivera",
-    "message": "Hello everyone!",
-    "timestamp": "2026-11-05T08:05:46.964877+00:00"
-  },
-  "assignments:::c7018784-1": {
-    "id": "c7018784-1",
-    "classId": "class-101",
-    "className": "CS 301: Advanced Algorithms & Computational Complexity",
-    "teacherId": "teacher-101",
-    "teacherName": "Dr. Robert Anderson",
-    "title": "Binary Trees Lab Assignment",
-    "description": "Implement BFS and DFS tree traversal with recursion.",
-    "dueDate": "2026-11-15T23:59:00",
-    "points": 100,
-    "resources": "",
-    "createdAt": "2026-11-05T08:05:47.014891+00:00"
-  },
-  "assignments:::c7018784-1:::submissions:::student-201": {
-    "studentId": "student-201",
-    "studentUid": "student-201",
-    "uid": "student-201",
-    "studentName": "Liam Chen",
-    "studentEmail": "student@example.com",
-    "assignmentId": "c7018784-1",
-    "content": "Completed BFS and DFS traversal algorithms. All unit tests passed.",
-    "submissionUrl": "https://github.com/student/binary-trees-solution",
-    "attachmentUrl": "https://github.com/student/binary-trees-solution",
-    "submittedAt": "2026-11-05T08:05:47.027262+00:00",
-    "status": "graded",
-    "grade": 98.0,
-    "remarks": "Outstanding tree traversal implementation! Elegant recursion and clean time complexity.",
-    "reviewedAt": "2026-11-05T08:05:47.036997+00:00",
-    "reviewedBy": "teacher-101"
+    "createdAt": "2026-11-05T08:32:38.921935+00:00"
   }
 }

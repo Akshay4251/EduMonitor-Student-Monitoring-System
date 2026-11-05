@@ -13,6 +13,22 @@ from config import db, firebase_auth
 from monitoring.scoring import calculate_engagement
 
 class EduMonitorTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.db_path = os.path.join(os.path.dirname(__file__), 'data', 'edumonitor_db.json')
+        if os.path.exists(cls.db_path):
+            with open(cls.db_path, 'r', encoding='utf-8') as f:
+                cls.backup_data = f.read()
+        else:
+            cls.backup_data = None
+
+    @classmethod
+    def tearDownClass(cls):
+        # Restore pristine database state so automated tests never pollute real data
+        if cls.backup_data is not None:
+            with open(cls.db_path, 'w', encoding='utf-8') as f:
+                f.write(cls.backup_data)
+
     def setUp(self):
         self.app = app.test_client()
         self.app.testing = True
@@ -108,6 +124,9 @@ class EduMonitorTestCase(unittest.TestCase):
         self.assertEqual(students_resp.status_code, 200)
         slist = students_resp.get_json()
         self.assertTrue(any(s.get('email') in ('student@example.com', 'liam.chen@student.edumonitor.edu') or 'student@example.com' in s.get('aliases', []) for s in slist))
+
+        # Cleanup created class so it does not linger in active database
+        self.app.delete(f'/api/classes/{class_id}', headers=self.teacher_headers)
 
     def test_04_session_lifecycle_and_quizzes(self):
         # Teacher creates session
