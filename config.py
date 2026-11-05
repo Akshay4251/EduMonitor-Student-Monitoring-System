@@ -14,123 +14,150 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY', 'edumonitor-super-secure-secret-key-32-chars-long!')
 
 _key_path = os.path.join(os.path.dirname(__file__), 'firebase_admin_key.json')
+_custom_cred_path = os.getenv('FIREBASE_ADMIN_CREDENTIALS') or os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+_service_account_json = os.getenv('FIREBASE_SERVICE_ACCOUNT_JSON')
+
 USE_MOCK = os.getenv('USE_MOCK', '').lower() in ('true', '1')
 
-if not USE_MOCK and os.path.exists(_key_path):
-    try:
-        _cred = credentials.Certificate(_key_path)
-        firebase_admin.initialize_app(_cred)
-        db = firestore.client()
-        firebase_auth = firebase_auth_module
-        print("[Firebase] Connected to Firebase Admin SDK via service account key.")
-    except Exception as e:
-        print(f"[Firebase Warning] Error initializing Firebase service account: {e}. Falling back to local emulator.")
+if not USE_MOCK:
+    if os.path.exists(_key_path):
+        try:
+            _cred = credentials.Certificate(_key_path)
+            firebase_admin.initialize_app(_cred)
+            db = firestore.client()
+            firebase_auth = firebase_auth_module
+            print("[Firebase] Connected to Firebase Admin SDK via service account key file.")
+        except Exception as e:
+            print(f"[Firebase Warning] Error initializing Firebase key: {e}. Falling back to local mode.")
+            USE_MOCK = True
+    elif _custom_cred_path and os.path.exists(_custom_cred_path):
+        try:
+            _cred = credentials.Certificate(_custom_cred_path)
+            firebase_admin.initialize_app(_cred)
+            db = firestore.client()
+            firebase_auth = firebase_auth_module
+            print(f"[Firebase] Connected to Firebase Admin SDK via {_custom_cred_path}.")
+        except Exception as e:
+            print(f"[Firebase Warning] Error initializing Firebase custom path: {e}. Falling back to local mode.")
+            USE_MOCK = True
+    elif _service_account_json:
+        try:
+            import json
+            cred_dict = json.loads(_service_account_json)
+            _cred = credentials.Certificate(cred_dict)
+            firebase_admin.initialize_app(_cred)
+            db = firestore.client()
+            firebase_auth = firebase_auth_module
+            print("[Firebase] Connected to Firebase Admin SDK via FIREBASE_SERVICE_ACCOUNT_JSON.")
+        except Exception as e:
+            print(f"[Firebase Warning] Error initializing service account JSON: {e}. Falling back to local mode.")
+            USE_MOCK = True
+    elif os.getenv('FIREBASE_PROJECT_ID'):
+        try:
+            firebase_admin.initialize_app()
+            db = firestore.client()
+            firebase_auth = firebase_auth_module
+            print("[Firebase] Connected to Firebase Admin SDK via ADC.")
+        except Exception as e:
+            print(f"[Firebase Warning] Default ADC fallback: {e}.")
+            USE_MOCK = True
+    else:
         USE_MOCK = True
-elif os.getenv('GOOGLE_APPLICATION_CREDENTIALS'):
-    try:
-        firebase_admin.initialize_app()
-        db = firestore.client()
-        firebase_auth = firebase_auth_module
-        print("[Firebase] Connected to Firebase Admin SDK via GOOGLE_APPLICATION_CREDENTIALS.")
-    except Exception as e:
-        print(f"[Firebase Warning] Error initializing Firebase ADC: {e}. Falling back to local emulator.")
-        USE_MOCK = True
-else:
-    USE_MOCK = True
 
 def _bootstrap_live_firebase(firestore_db, auth_mod):
-    """Auto-seed demo credentials and baseline collection on live Firebase projects."""
+    """Auto-seed real academic baseline dataset on live Firebase projects."""
     try:
+        import copy
         from datetime import datetime, timezone
-        demo_accounts = [
-            ('teacher@example.com', 'password123', 'Prof. Sarah Jenkins', 'teacher'),
-            ('student@example.com', 'password123', 'Alex Rivera', 'student'),
-            ('admin@example.com', 'password123', 'System Administrator', 'admin'),
-        ]
-        uids = {}
-        for email, password, name, role in demo_accounts:
-            uid = None
+        from seed_data import get_seed_data
+        seed = get_seed_data()
+        now = datetime.now(timezone.utc).isoformat()
+
+        # Seed Faculty and Students in Firebase Auth + Firestore
+        for u in seed['users']:
+            email = u['email']
+            name = u['displayName']
+            role = u['role']
+            uid = u['uid']
             try:
-                user = auth_mod.get_user_by_email(email)
-                uid = user.uid
+                existing = auth_mod.get_user_by_email(email)
+                uid = existing.uid
             except Exception:
                 try:
-                    user = auth_mod.create_user(email=email, password=password, display_name=name)
-                    uid = user.uid
-                except Exception:
-                    pass
-            if uid:
-                uids[role] = uid
-                try:
-                    auth_mod.set_custom_user_claims(uid, {'role': role})
-                except Exception:
-                    pass
-                try:
-                    firestore_db.collection('users').document(uid).set({
-                        'uid': uid,
-                        'email': email,
-                        'displayName': name,
-                        'role': role,
-                        'active': True,
-                        'createdAt': datetime.now(timezone.utc).isoformat(),
-                        'enrolledClasses': []
-                    }, merge=True)
+                    user_rec = auth_mod.create_user(uid=uid, email=email, password='password123', display_name=name)
+                    uid = user_rec.uid
                 except Exception:
                     pass
 
-        # Seed initial class if database is completely empty
+            try:
+                auth_mod.set_custom_user_claims(uid, {'role': role})
+            except Exception:
+                pass
+
+            try:
+                u_doc = copy.deepcopy(u)
+                u_doc['uid'] = uid
+                firestore_db.collection('users').document(uid).set(u_doc, merge=True)
+            except Exception:
+                pass
+
+        # Seed Legacy Aliases so automated tests and demo quick-sign-in work seamlessly
+        for alias_email, target_uid, target_name, target_role in seed['legacy_aliases']:
+            try:
+                try:
+                    existing = auth_mod.get_user_by_email(alias_email)
+                    a_uid = existing.uid
+                except Exception:
+                    a_uid = f"alias-{target_uid}"
+                    try:
+                        user_rec = auth_mod.create_user(uid=a_uid, email=alias_email, password='password123', display_name=target_name)
+                        a_uid = user_rec.uid
+                    except Exception:
+                        pass
+                auth_mod.set_custom_user_claims(a_uid, {'role': target_role})
+                firestore_db.collection('users').document(a_uid).set({
+                    'uid': a_uid, 'email': alias_email, 'displayName': target_name,
+                    'role': target_role, 'active': True, 'createdAt': now,
+                    'enrolledClasses': ['class-101']
+                }, merge=True)
+            except Exception:
+                pass
+
+        # Seed Classes
         try:
-            existing_classes = list(firestore_db.collection('classes').limit(1).stream())
-            if not existing_classes and 'teacher' in uids:
-                firestore_db.collection('classes').document('class-cs101').set({
-                    'id': 'class-cs101',
-                    'name': 'CS 101: Computer Science Foundations',
-                    'subject': 'Computer Science',
-                    'description': 'Introduction to algorithms, data structures, and computational thinking.',
-                    'schedule': 'Mon / Wed 10:00 AM',
-                    'joinCode': 'CS101X',
-                    'teacherId': uids['teacher'],
-                    'teacherName': 'Prof. Sarah Jenkins',
-                    'createdAt': datetime.now(timezone.utc).isoformat(),
-                    'active': True,
-                    'students': [uids['student']] if 'student' in uids else []
-                }, merge=True)
-
-                # Seed sample assignment
-                firestore_db.collection('assignments').document('assign-cs101').set({
-                    'id': 'assign-cs101',
-                    'classId': 'class-cs101',
-                    'className': 'CS 101: Computer Science Foundations',
-                    'teacherId': uids['teacher'],
-                    'teacherName': 'Prof. Sarah Jenkins',
-                    'title': 'Problem Set 1: Graph Traversal & BFS/DFS',
-                    'description': 'Implement Depth-First Search and Breadth-First Search in Python with unit tests.',
-                    'dueDate': datetime.now(timezone.utc).isoformat(),
-                    'points': 100,
-                    'resources': 'https://docs.python.org/3/tutorial/datastructures.html',
-                    'createdAt': datetime.now(timezone.utc).isoformat(),
-                }, merge=True)
-
-                # Seed sample study material
-                firestore_db.collection('materials').document('mat-cs101').set({
-                    'id': 'mat-cs101',
-                    'classId': 'class-cs101',
-                    'className': 'CS 101: Computer Science Foundations',
-                    'teacherId': uids['teacher'],
-                    'teacherName': 'Prof. Sarah Jenkins',
-                    'title': 'Graph Traversal Visualizer & DFS Walkthrough',
-                    'type': 'youtube',
-                    'url': 'https://www.youtube.com/watch?v=pcKY4hjDrxk',
-                    'youtubeId': 'pcKY4hjDrxk',
-                    'content': 'Comprehensive video walkthrough of graph algorithms and recursion stack behavior.',
-                    'createdAt': datetime.now(timezone.utc).isoformat(),
-                }, merge=True)
-
-                print("[Firebase] Live Firebase project auto-seeded with starter class and demo credentials.")
+            for c in seed['classes']:
+                firestore_db.collection('classes').document(c['id']).set(c, merge=True)
         except Exception as e:
-            print(f"[Firebase] Class bootstrap info: {e}")
+            print(f"[Firebase] Classes bootstrap info: {e}")
+
+        # Seed Sessions
+        try:
+            for s in seed['sessions']:
+                firestore_db.collection('sessions').document(s['id']).set(s, merge=True)
+        except Exception as e:
+            print(f"[Firebase] Sessions bootstrap info: {e}")
+
+        # Seed Assignments & Submissions
+        try:
+            for a in seed['assignments']:
+                aid = a['id']
+                subs = a.pop('submissions', {})
+                firestore_db.collection('assignments').document(aid).set(a, merge=True)
+                for suid, sub_data in subs.items():
+                    firestore_db.collection('assignments').document(aid).collection('submissions').document(suid).set(sub_data, merge=True)
+        except Exception as e:
+            print(f"[Firebase] Assignments bootstrap info: {e}")
+
+        # Seed Materials
+        try:
+            for m in seed['materials']:
+                firestore_db.collection('materials').document(m['id']).set(m, merge=True)
+        except Exception as e:
+            print(f"[Firebase] Materials bootstrap info: {e}")
+
+        print("[Firebase] Live Firebase project auto-seeded with 5 university courses and faculty roster.")
     except Exception as e:
-        print(f"[Firebase Warning] Auto-bootstrap info: {e}")
+        print(f"[Firebase Warning] Live bootstrap info: {e}")
 
 if USE_MOCK:
     from mock_firebase import MockFirestore, MockFirebaseAuth

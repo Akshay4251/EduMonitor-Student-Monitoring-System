@@ -104,10 +104,14 @@ def login():
         return jsonify({'error': 'Email and password are required'}), 400
 
     user_doc = None
-    docs = db.collection('users').where('email', '==', email).stream()
-    for d in docs:
-        user_doc = d
-        break
+    docs = list(db.collection('users').where('email', '==', email).stream())
+    if docs:
+        user_doc = docs[0]
+    else:
+        # Check aliases array for institutional users
+        alias_docs = list(db.collection('users').where('aliases', 'array_contains', email).stream())
+        if alias_docs:
+            user_doc = alias_docs[0]
 
     if not user_doc:
         return jsonify({'error': 'No account found with this email'}), 404
@@ -120,7 +124,7 @@ def login():
     if stored_pw and stored_pw != password:
         return jsonify({'error': 'Invalid email or password'}), 401
 
-    uid  = user_doc.id
+    uid  = u.get('uid') or user_doc.id
     role = u.get('role', 'student')
     name = u.get('displayName', email)
 

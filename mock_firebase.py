@@ -142,7 +142,9 @@ class MockQuery:
 class MockFirestore:
     def __init__(self):
         self._storage = {}  # tuple(path_parts) -> dict
-        self._seed_sample_data()
+        if not self._load_from_disk():
+            self._seed_sample_data()
+            self._save_to_disk()
 
     def collection(self, name):
         return MockCollectionReference(self, [name])
@@ -159,6 +161,7 @@ class MockFirestore:
             self._storage[key].update(copy.deepcopy(data))
         else:
             self._storage[key] = copy.deepcopy(data)
+        self._save_to_disk()
 
     def _delete_doc_data(self, path_parts):
         key = tuple(path_parts)
@@ -166,6 +169,7 @@ class MockFirestore:
         subkeys = [k for k in self._storage if len(k) > len(key) and k[:len(key)] == key]
         for sk in subkeys:
             self._storage.pop(sk, None)
+        self._save_to_disk()
 
     def _update_doc_data(self, path_parts, updates):
         key = tuple(path_parts)
@@ -193,6 +197,35 @@ class MockFirestore:
                 curr[parts[-1]] = v
             else:
                 target[k] = copy.deepcopy(v)
+        self._save_to_disk()
+
+    def _save_to_disk(self):
+        try:
+            data_dir = os.path.join(os.path.dirname(__file__), 'data')
+            os.makedirs(data_dir, exist_ok=True)
+            db_path = os.path.join(data_dir, 'edumonitor_db.json')
+            serializable = {":::".join(k): v for k, v in self._storage.items()}
+            with open(db_path, 'w', encoding='utf-8') as f:
+                json.dump(serializable, f, indent=2)
+        except Exception:
+            pass
+
+    def _load_from_disk(self):
+        try:
+            db_path = os.path.join(os.path.dirname(__file__), 'data', 'edumonitor_db.json')
+            if os.path.exists(db_path):
+                with open(db_path, 'r', encoding='utf-8') as f:
+                    raw = json.load(f)
+                loaded = {tuple(k.split(":::")): v for k, v in raw.items()}
+                # If loaded data still contains obsolete dummy Sarah or lacks multi-class data, reseed freshly
+                sample_str = str(list(loaded.values())[:10])
+                if 'Sarah' in sample_str or len([k for k in loaded if len(k) == 2 and k[0] == 'classes']) < 3:
+                    return False
+                self._storage = loaded
+                return True
+        except Exception:
+            pass
+        return False
 
     def _get_collection_docs(self, path_parts):
         prefix_len = len(path_parts)
@@ -216,263 +249,114 @@ class MockFirestore:
         return snaps
 
     def _seed_sample_data(self):
+        from seed_data import get_seed_data
+        data = get_seed_data()
         now = datetime.now(timezone.utc).isoformat()
 
-        # Seed Users
-        users = [
-            {
-                'uid': 'teacher-101',
-                'email': 'teacher@example.com',
-                'displayName': 'Prof. Sarah Jenkins',
-                'role': 'teacher',
-                'createdAt': now,
-                'active': True,
-                'enrolledClasses': ['class-101'],
-                'password': 'password123',
-            },
-            {
-                'uid': 'student-201',
-                'email': 'student@example.com',
-                'displayName': 'Alex Rivera',
-                'role': 'student',
-                'createdAt': now,
-                'active': True,
-                'enrolledClasses': ['class-101'],
-                'password': 'password123',
-            },
-            {
-                'uid': 'student-202',
-                'email': 'student2@example.com',
-                'displayName': 'Maya Lin',
-                'role': 'student',
-                'createdAt': now,
-                'active': True,
-                'enrolledClasses': ['class-101'],
-                'password': 'password123',
-            },
-            {
-                'uid': 'admin-301',
-                'email': 'admin@example.com',
-                'displayName': 'System Administrator',
-                'role': 'admin',
-                'createdAt': now,
-                'active': True,
-                'enrolledClasses': [],
-                'password': 'password123',
-            },
-        ]
-        for u in users:
-            self._storage[('users', u['uid'])] = u
+        # 1. Seed Accredited Faculty and Students
+        for u in data['users']:
+            self._storage[('users', u['uid'])] = copy.deepcopy(u)
 
-        # Seed Class
-        cls = {
-            'id': 'class-101',
-            'name': 'CS101: Introduction to Algorithms',
-            'description': 'Core computer science fundamentals, graph algorithms, and data structures.',
-            'subject': 'Computer Science',
-            'teacherId': 'teacher-101',
-            'teacherName': 'Prof. Sarah Jenkins',
-            'schedule': 'Mon / Wed 10:00 AM',
-            'students': ['student-201', 'student-202'],
-            'joinCode': 'ALG101',
-            'createdAt': now,
-            'active': True,
-        }
-        self._storage[('classes', 'class-101')] = cls
+        # 2. Seed Legacy Aliases so automated test suites and 1-click personas work without breakages
+        for alias_email, target_uid, target_name, target_role in data['legacy_aliases']:
+            alias_doc = copy.deepcopy(self._storage[('users', target_uid)])
+            alias_doc['email'] = alias_email
+            alias_doc['displayName'] = target_name
+            alias_doc['role'] = target_role
+            alias_doc['uid'] = target_uid
+            self._storage[('users', alias_email)] = alias_doc
 
-        # Seed Past Sessions for Analytics & Reports
-        past_sessions = [
-            {
-                'id': 'session-002',
-                'classId': 'class-101',
-                'className': 'CS101: Introduction to Algorithms',
-                'teacherId': 'teacher-101',
-                'teacherName': 'Prof. Sarah Jenkins',
-                'title': 'Lecture 1: Asymptotic Complexity & Big-O Notation',
-                'description': 'Time and space complexity analysis, recurrence relations.',
-                'scheduledAt': '2026-10-25T10:00:00Z',
-                'startedAt': '2026-10-25T10:02:00Z',
-                'endedAt': '2026-10-25T11:00:00Z',
-                'status': 'ended',
-                'joinCode': 'ASMY01',
-                'participants': ['student-201', 'student-202'],
-                'createdAt': '2026-10-25T09:30:00Z',
-            },
-            {
-                'id': 'session-003',
-                'classId': 'class-101',
-                'className': 'CS101: Introduction to Algorithms',
-                'teacherId': 'teacher-101',
-                'teacherName': 'Prof. Sarah Jenkins',
-                'title': 'Lecture 2: Dynamic Arrays, Stacks & Queues',
-                'description': 'Amortized bounds, circular buffers, stack/queue applications.',
-                'scheduledAt': '2026-10-27T10:00:00Z',
-                'startedAt': '2026-10-27T10:01:00Z',
-                'endedAt': '2026-10-27T11:02:00Z',
-                'status': 'ended',
-                'joinCode': 'STCK02',
-                'participants': ['student-201', 'student-202'],
-                'createdAt': '2026-10-27T09:30:00Z',
-            },
-            {
-                'id': 'session-004',
-                'classId': 'class-101',
-                'className': 'CS101: Introduction to Algorithms',
-                'teacherId': 'teacher-101',
-                'teacherName': 'Prof. Sarah Jenkins',
-                'title': 'Lecture 3: Binary Trees, Heaps & Priority Queues',
-                'description': 'Tree traversals, heapify operations, priority queue implementations.',
-                'scheduledAt': '2026-10-29T10:00:00Z',
-                'startedAt': '2026-10-29T10:00:00Z',
-                'endedAt': '2026-10-29T11:05:00Z',
-                'status': 'ended',
-                'joinCode': 'TREE03',
-                'participants': ['student-201', 'student-202'],
-                'createdAt': '2026-10-29T09:30:00Z',
-            },
-        ]
+        # 3. Seed 5 Real University Courses / Classes
+        for c in data['classes']:
+            self._storage[('classes', c['id'])] = copy.deepcopy(c)
 
-        for s in past_sessions:
+        # 4. Seed 5 Real Sessions (Live, Past, and Scheduled)
+        for s in data['sessions']:
             sid = s['id']
-            self._storage[('sessions', sid)] = s
+            self._storage[('sessions', sid)] = copy.deepcopy(s)
 
-            # Seed Attendance
-            self._storage[('sessions', sid, 'attendance', 'student-201')] = {
-                'uid': 'student-201', 'name': 'Alex Rivera',
-                'joinTime': s['startedAt'], 'leaveTime': s['endedAt'],
-                'duration': 3600, 'status': 'present'
-            }
-            self._storage[('sessions', sid, 'attendance', 'student-202')] = {
-                'uid': 'student-202', 'name': 'Maya Lin',
-                'joinTime': s['startedAt'], 'leaveTime': s['endedAt'],
-                'duration': 3420, 'status': 'present'
-            }
+        # 5. Seed Attendance, Activity, and Engagement Analytics
+        student_analytics = [
+            ('student-201', 'Liam Chen', 98.2, 100.0, 99.0, 96.0, 95.0),
+            ('student-202', 'Sophia Rodriguez', 94.6, 100.0, 95.0, 92.0, 91.0),
+            ('student-203', 'Ethan Wright', 91.8, 100.0, 92.0, 88.0, 89.0),
+            ('student-204', 'Aisha Patel', 93.4, 100.0, 94.0, 90.0, 92.0),
+            ('student-205', 'Noah Kim', 89.5, 95.0, 90.0, 82.0, 86.0),
+        ]
 
-            # Seed Activity
-            self._storage[('sessions', sid, 'activity', 'student-201')] = {
-                'uid': 'student-201', 'tabSwitchCount': 1, 'tabAwayDuration': 45,
-                'idleDuration': 60, 'faceDetectedDuration': 3240, 'chatCount': 5,
-                'pollResponses': 3, 'quizResponses': 2, 'handRaiseCount': 1
-            }
-            self._storage[('sessions', sid, 'activity', 'student-202')] = {
-                'uid': 'student-202', 'tabSwitchCount': 3, 'tabAwayDuration': 180,
-                'idleDuration': 120, 'faceDetectedDuration': 2880, 'chatCount': 3,
-                'pollResponses': 2, 'quizResponses': 2, 'handRaiseCount': 0
-            }
+        for s in data['sessions']:
+            sid = s['id']
+            if s['status'] in ('ended', 'live'):
+                for uid, name, eng_score, att_rate, focus_rate, part_rate, face_rate in student_analytics:
+                    self._storage[('sessions', sid, 'attendance', uid)] = {
+                        'uid': uid,
+                        'name': name,
+                        'joinTime': s.get('startedAt', now),
+                        'leaveTime': s.get('endedAt', now),
+                        'duration': 3600 if s['status'] == 'ended' else 1800,
+                        'status': 'present'
+                    }
+                    self._storage[('sessions', sid, 'activity', uid)] = {
+                        'uid': uid,
+                        'tabSwitchCount': 1,
+                        'tabAwayDuration': 35,
+                        'idleDuration': 45,
+                        'faceDetectedDuration': 3450,
+                        'chatCount': 7,
+                        'pollResponses': 3,
+                        'quizResponses': 2,
+                        'handRaiseCount': 1
+                    }
+                    self._storage[('sessions', sid, 'engagement', uid)] = {
+                        'uid': uid,
+                        'name': name,
+                        'score': eng_score,
+                        'attendance': att_rate,
+                        'focus': focus_rate,
+                        'participation': part_rate,
+                        'facePresence': face_rate
+                    }
 
-        # Seed Engagement Scores for Past Sessions
-        self._storage[('sessions', 'session-002', 'engagement', 'student-201')] = {
-            'uid': 'student-201', 'name': 'Alex Rivera', 'score': 92.5,
-            'attendance': 100.0, 'focus': 97.0, 'participation': 85.0, 'facePresence': 90.0
-        }
-        self._storage[('sessions', 'session-002', 'engagement', 'student-202')] = {
-            'uid': 'student-202', 'name': 'Maya Lin', 'score': 84.2,
-            'attendance': 95.0, 'focus': 90.0, 'participation': 70.0, 'facePresence': 80.0
-        }
-
-        self._storage[('sessions', 'session-003', 'engagement', 'student-201')] = {
-            'uid': 'student-201', 'name': 'Alex Rivera', 'score': 95.8,
-            'attendance': 100.0, 'focus': 98.0, 'participation': 92.0, 'facePresence': 92.0
-        }
-        self._storage[('sessions', 'session-003', 'engagement', 'student-202')] = {
-            'uid': 'student-202', 'name': 'Maya Lin', 'score': 88.5,
-            'attendance': 100.0, 'focus': 92.0, 'participation': 80.0, 'facePresence': 85.0
-        }
-
-        self._storage[('sessions', 'session-004', 'engagement', 'student-201')] = {
-            'uid': 'student-201', 'name': 'Alex Rivera', 'score': 94.2,
-            'attendance': 100.0, 'focus': 95.0, 'participation': 90.0, 'facePresence': 91.0
-        }
-        self._storage[('sessions', 'session-004', 'engagement', 'student-202')] = {
-            'uid': 'student-202', 'name': 'Maya Lin', 'score': 81.0,
-            'attendance': 95.0, 'focus': 82.0, 'participation': 68.0, 'facePresence': 78.0
-        }
-
-        # Seed Live Session
-        sess = {
-            'id': 'session-001',
-            'classId': 'class-101',
-            'className': 'CS101: Introduction to Algorithms',
-            'teacherId': 'teacher-101',
-            'teacherName': 'Prof. Sarah Jenkins',
-            'title': 'Live Demo: Graph Search Algorithms',
-            'description': 'Exploring BFS, DFS, and real-time visualization with engagement tracking.',
-            'scheduledAt': now,
-            'startedAt': now,
-            'endedAt': None,
-            'status': 'live',
-            'joinCode': 'BST001',
-            'participants': [],
+        # 6. Seed Interactive Concept Quiz and Real-Time Poll
+        self._storage[('sessions', 'session-001', 'quizzes', 'quiz-001')] = {
+            'id': 'quiz-001',
+            'sessionId': 'session-001',
+            'title': 'Mid-Lecture Concept Check: Graph Algorithms & Dynamic Programming',
+            'questions': [
+                {
+                    'question': 'What is the tightest upper bound for Dijkstra algorithm with a binary min-heap?',
+                    'options': ['O(V + E)', 'O((V + E) log V)', 'O(V^2)', 'O(E^2)'],
+                    'answer': 1
+                },
+                {
+                    'question': 'Which algorithm detects negative-weight cycles in directed graphs?',
+                    'options': ['Dijkstra Algorithm', 'Bellman-Ford Algorithm', 'Breadth-First Search', 'Kruskal Algorithm'],
+                    'answer': 1
+                }
+            ],
             'createdAt': now,
         }
-        self._storage[('sessions', 'session-001')] = sess
 
-        # Also seed attendance & engagement for session-001 so it has immediate report data
-        self._storage[('sessions', 'session-001', 'engagement', 'student-201')] = {
-            'uid': 'student-201', 'name': 'Alex Rivera', 'score': 93.0,
-            'attendance': 100.0, 'focus': 95.0, 'participation': 88.0, 'facePresence': 90.0
-        }
-        self._storage[('sessions', 'session-001', 'engagement', 'student-202')] = {
-            'uid': 'student-202', 'name': 'Maya Lin', 'score': 86.5,
-            'attendance': 100.0, 'focus': 89.0, 'participation': 75.0, 'facePresence': 82.0
-        }
-
-        # Seed Sample Assignments
-        self._storage[('assignments', 'assign-001')] = {
-            'id': 'assign-001',
-            'classId': 'class-101',
-            'className': 'CS101: Introduction to Algorithms',
-            'teacherId': 'teacher-101',
-            'teacherName': 'Prof. Sarah Jenkins',
-            'title': 'Problem Set 1: Graph Traversal & BFS/DFS',
-            'description': 'Implement Depth-First Search and Breadth-First Search in Python. Include unit tests and time complexity analysis.',
-            'dueDate': '2026-11-15T23:59:00Z',
-            'points': 100,
-            'resources': 'https://docs.python.org/3/tutorial/datastructures.html',
+        self._storage[('sessions', 'session-001', 'polls', 'poll-001')] = {
+            'id': 'poll-001',
+            'sessionId': 'session-001',
+            'question': 'Are you confident with the edge relaxation invariant dist[v] > dist[u] + w(u, v)?',
+            'options': ['Fully understood', 'Need one more code trace example', 'Review negative weight constraints'],
+            'responses': {'student-201': 0, 'student-202': 0, 'student-203': 1},
             'createdAt': now,
         }
-        self._storage[('assignments', 'assign-001', 'submissions', 'student-201')] = {
-            'studentId': 'student-201',
-            'studentName': 'Alex Rivera',
-            'studentEmail': 'student@example.com',
-            'assignmentId': 'assign-001',
-            'content': 'Implemented both BFS and DFS with recursive and queue-based iterations. Added test cases covering cyclic graphs.',
-            'attachmentUrl': 'https://github.com/example/cs101-ps1',
-            'submittedAt': now,
-            'status': 'graded',
-            'grade': 96.0,
-            'remarks': 'Excellent recursive DFS implementation! Clean code comments and thorough complexity analysis.',
-            'reviewedAt': now,
-            'reviewedBy': 'teacher-101',
-        }
 
-        # Seed Sample Study Materials
-        self._storage[('materials', 'mat-001')] = {
-            'id': 'mat-001',
-            'classId': 'class-101',
-            'className': 'CS101: Introduction to Algorithms',
-            'teacherId': 'teacher-101',
-            'teacherName': 'Prof. Sarah Jenkins',
-            'title': 'Graph Traversal Visualizer & DFS Walkthrough',
-            'type': 'youtube',
-            'url': 'https://www.youtube.com/watch?v=pcKY4hjDrxk',
-            'youtubeId': 'pcKY4hjDrxk',
-            'content': 'Comprehensive video walkthrough of graph algorithms, adjacency list representations, and recursion stack behavior.',
-            'createdAt': now,
-        }
-        self._storage[('materials', 'mat-002')] = {
-            'id': 'mat-002',
-            'classId': 'class-101',
-            'className': 'CS101: Introduction to Algorithms',
-            'teacherId': 'teacher-101',
-            'teacherName': 'Prof. Sarah Jenkins',
-            'title': 'Lecture 3 Notes: Time Complexity & Big-O Master Theorem',
-            'type': 'notes',
-            'url': '',
-            'youtubeId': '',
-            'content': 'Key Topics:\n- O(1): Constant lookup\n- O(log N): Binary Search\n- O(N): Linear scan\n- O(N log N): Merge Sort\n- O(V + E): BFS/DFS Graph Traversal\n\nRemember to account for worst-case recursion depth when calculating space complexity!',
-            'createdAt': now,
-        }
+        # 7. Seed 5 Real University Assignments & Graded Submissions
+        for a in data['assignments']:
+            aid = a['id']
+            subs = a.pop('submissions', {})
+            self._storage[('assignments', aid)] = copy.deepcopy(a)
+            for suid, sub_data in subs.items():
+                self._storage[('assignments', aid, 'submissions', suid)] = copy.deepcopy(sub_data)
+
+        # 8. Seed 5 Real Study Materials (YouTube Lectures, Notes, Guides)
+        for m in data['materials']:
+            self._storage[('materials', m['id'])] = copy.deepcopy(m)
 
 
 class MockFirebaseAuth:
@@ -483,7 +367,6 @@ class MockFirebaseAuth:
         # Check if email exists
         for key, doc in self._db._storage.items():
             if len(key) == 2 and key[0] == 'users' and doc.get('email') == email:
-                # User already exists
                 return MockUserRecord(doc['uid'], email, doc.get('displayName'))
 
         import uuid
@@ -496,14 +379,23 @@ class MockFirebaseAuth:
             'active': True,
             'createdAt': datetime.now(timezone.utc).isoformat(),
             'password': password or 'password123',
+            'enrolledClasses': ['class-101'],
         }
         self._db._storage[('users', uid)] = user_data
+        self._db._save_to_disk()
         return MockUserRecord(uid, email, display_name)
+
+    def get_user_by_email(self, email):
+        for key, doc in self._db._storage.items():
+            if len(key) == 2 and key[0] == 'users' and doc.get('email') == email:
+                return MockUserRecord(doc['uid'], email, doc.get('displayName'))
+        raise ValueError(f"No user found for email {email}")
 
     def set_custom_user_claims(self, uid, claims):
         key = ('users', uid)
         if key in self._db._storage:
             self._db._storage[key].update(claims)
+            self._db._save_to_disk()
 
     def update_user(self, uid, display_name=None, disabled=None, **kwargs):
         key = ('users', uid)
@@ -512,12 +404,12 @@ class MockFirebaseAuth:
                 self._db._storage[key]['displayName'] = display_name
             if disabled is not None:
                 self._db._storage[key]['active'] = not disabled
+            self._db._save_to_disk()
 
     def verify_id_token(self, token):
         if not token:
             raise ValueError("Empty token")
 
-        # Mock token format: "mock-token-<uid>" or JWT
         if token.startswith("mock-token-"):
             uid = token[len("mock-token-"):]
             user_doc = self._db._get_doc_data(['users', uid]) or {}
@@ -528,12 +420,10 @@ class MockFirebaseAuth:
                 'role': user_doc.get('role', 'student'),
             }
 
-        # Attempt to decode as JWT signed with SECRET_KEY
         try:
             decoded = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             return decoded
         except Exception:
-            # Fallback mock decode
             pass
 
         raise ValueError("Invalid ID token")

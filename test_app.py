@@ -107,7 +107,7 @@ class EduMonitorTestCase(unittest.TestCase):
         students_resp = self.app.get(f'/api/classes/{class_id}/students', headers=self.teacher_headers)
         self.assertEqual(students_resp.status_code, 200)
         slist = students_resp.get_json()
-        self.assertTrue(any(s['email'] == 'student@example.com' for s in slist))
+        self.assertTrue(any(s.get('email') in ('student@example.com', 'liam.chen@student.edumonitor.edu') or 'student@example.com' in s.get('aliases', []) for s in slist))
 
     def test_04_session_lifecycle_and_quizzes(self):
         # Teacher creates session

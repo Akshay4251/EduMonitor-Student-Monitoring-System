@@ -68,38 +68,36 @@ Open **[http://localhost:5000](http://localhost:5000)** in your browser.
 
 ---
 
-## ⚡ Zero-Setup Local Mode & Firebase Dual Support
+## ⚡ Zero-Setup Local Mode & Firebase Cloud Dual Support
 
 The platform runs in **two modes**:
 
-### Mode A: Local Emulated Mode (Default — No Cloud Account Needed)
-- If `firebase_admin_key.json` is not present, EduMonitor automatically starts its high-fidelity local emulator.
-- The system comes pre-seeded with test accounts and sample classes so you can test immediately:
+### Mode A: Zero-Setup Institutional Database Mode (Default — Instant Out of the Box)
+- If `firebase_admin_key.json` is not present, EduMonitor automatically starts its high-performance local database with disk persistence (`data/edumonitor_db.json`).
+- The system comes pre-seeded with 5 university courses, faculty profiles, scholar records, assignments, and sessions:
 
-| Role | Email | Password | Pre-seeded Resources |
-| :--- | :--- | :--- | :--- |
-| **Teacher** | `teacher@example.com` | `password123` | Class *CS101: Introduction to Algorithms*, Session *Live Demo: Graph Search* |
-| **Student** | `student@example.com` | `password123` | Enrolled in CS101 |
-| **Student 2** | `student2@example.com` | `password123` | Enrolled in CS101 |
-| **Admin** | `admin@example.com` | `password123` | Full admin privileges |
+| Role | Institutional Email | Quick Alias | Password | Pre-seeded Department / Resources |
+| :--- | :--- | :--- | :--- | :--- |
+| **Faculty Chair** | `robert.anderson@edumonitor.edu` | `teacher@example.com` | `password123` | *CS 301: Advanced Algorithms* & *CY 310: Network Security* |
+| **AI Professor** | `elena.rostova@edumonitor.edu` | — | `password123` | *AI 402: Deep Neural Networks & Transformers* |
+| **Cloud Professor** | `marcus.sterling@edumonitor.edu` | — | `password123` | *SE 250: Distributed Systems* & *CS 220: Full-Stack Web* |
+| **Senior Scholar** | `liam.chen@student.edumonitor.edu` | `student@example.com` | `password123` | Enrolled across CS 301, AI 402, SE 250, CS 220 |
+| **Data Scholar** | `sophia.rodriguez@student.edumonitor.edu` | `student2@example.com` | `password123` | Enrolled across CS 301, AI 402, CY 310, CS 220 |
+| **Dean / Admin** | `admin@edumonitor.edu` | `admin@example.com` | `password123` | Full academic administration oversight |
 
 > [!TIP]
-> On the Sign In screen, click any of the **Quick Demo Sign-In** buttons (**Teacher**, **Student**, **Admin**) for instant 1-click access!
+> On the Sign In screen, click any of the **1-Click Institutional Access** cards (**Dr. Anderson**, **Liam Chen**, **Dr. Vance**) for instant 1-click access!
 
-### Mode B: Production Firebase Mode
-1. Place your Firebase service account private key as **`firebase_admin_key.json`** in the project root directory.
-2. Open `static/js/firebase-init.js` and paste your Firebase Web App configuration:
-   ```javascript
-   const firebaseConfig = {
-     apiKey: "AIzaSy...",
-     authDomain: "your-project.firebaseapp.com",
-     projectId: "your-project",
-     storageBucket: "your-project.appspot.com",
-     messagingSenderId: "1234567890",
-     appId: "1:1234567890:web:abcdef"
-   };
+### Mode B: Google Cloud Firebase Mode (Running on Other Computers / Production)
+When cloning to another computer, you can connect your Google Cloud Firebase project without editing any frontend code (preventing secret leakage):
+1. **Option 1 (Recommended)**: Place your Firebase service account private key as **`firebase_admin_key.json`** in the project root.
+2. **Option 2 (Environment variables)**: Copy `.env.example` to `.env` and fill in your Firebase project credentials:
+   ```env
+   FIREBASE_PROJECT_ID=your-project-id
+   FIREBASE_API_KEY=AIzaSy...your-web-api-key
+   FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
    ```
-3. Restart `python app.py`. EduMonitor will automatically connect to Firebase Admin SDK and cloud Firestore!
+3. Run `python app.py`. EduMonitor automatically detects your credentials, initializes the Admin SDK, and syncs client-side authentication dynamically!
 
 ---
 

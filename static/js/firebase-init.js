@@ -16,25 +16,33 @@ const firebaseConfig = {
   measurementId: "YOUR_MEASUREMENT_ID"
 };
 
-const isFirebaseConfigured = Boolean(
-  window.firebase &&
-  firebaseConfig.apiKey &&
-  firebaseConfig.apiKey !== "YOUR_API_KEY" &&
-  firebaseConfig.projectId !== "YOUR_PROJECT"
-);
-
 let firebaseAuthInstance = null;
-if (isFirebaseConfigured) {
+
+// Dynamically check backend for configured Firebase credentials or fallback to local mode
+(async function initFirebaseClient() {
   try {
-    firebase.initializeApp(firebaseConfig);
-    firebaseAuthInstance = firebase.auth();
-    console.log("[Auth] Using Live Firebase Auth");
-  } catch (err) {
-    console.warn("[Auth] Failed to initialize Firebase Auth, falling back to local mode:", err);
+    const baseUrl = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '5000'))
+      ? 'http://127.0.0.1:5000'
+      : '';
+    const res = await fetch(baseUrl + '/api/config/firebase');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.configured && data.config && data.config.apiKey && window.firebase) {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(data.config);
+        }
+        firebaseAuthInstance = firebase.auth();
+        console.log("[Auth] Connected to Live Firebase Cloud Project:", data.projectId);
+        window.dispatchEvent(new CustomEvent('firebase-status-change', { detail: { live: true, projectId: data.projectId } }));
+        return;
+      }
+    }
+  } catch (e) {
+    console.warn("[Auth] Firebase auto-config check info:", e);
   }
-} else {
-  console.log("[Auth] Running in Local Emulator Mode with demo accounts.");
-}
+  console.log("[Auth] Running in High-Performance Local Database Mode with real academic data.");
+  window.dispatchEvent(new CustomEvent('firebase-status-change', { detail: { live: false } }));
+})();
 
 /* ── Auth helpers ────────────────────────────────────────────────── */
 const Auth = {

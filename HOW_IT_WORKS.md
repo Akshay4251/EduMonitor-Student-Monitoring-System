@@ -179,14 +179,17 @@ python app.py
 ### Step 3: Open in Browser
 Visit **[http://localhost:5000](http://localhost:5000)**.
 
-### Quick Demo Logins (Pre-seeded Accounts)
-On the login screen, you can use the quick login buttons or enter these credentials:
+### Quick Institutional Logins (Pre-seeded Production Accounts)
+On the login screen, you can click the **1-Click Institutional Access** cards or enter these credentials:
 
-| Role | Email | Password | What You Can Test |
-| :--- | :--- | :--- | :--- |
-| **Teacher** | `teacher@example.com` | `password123` | Start lectures, view student directory, grade assignments, add YouTube notes |
-| **Student** | `student@example.com` | `password123` | Join live rooms, submit assignments, see teacher remarks, watch videos |
-| **Admin** | `admin@example.com` | `password123` | Inspect all users, download PDF/CSV institutional reports |
+| Role | Institutional Email | Quick Alias | Password | What You Can Test |
+| :--- | :--- | :--- | :--- | :--- |
+| **Faculty Chair** | `robert.anderson@edumonitor.edu` | `teacher@example.com` | `password123` | Start lectures, view student directory, grade assignments, add YouTube notes |
+| **AI Professor** | `elena.rostova@edumonitor.edu` | — | `password123` | AI 402 courses, deep learning problem sets |
+| **Cloud Professor** | `marcus.sterling@edumonitor.edu` | — | `password123` | SE 250 distributed systems, Raft consensus |
+| **Senior Scholar** | `liam.chen@student.edumonitor.edu` | `student@example.com` | `password123` | Join live rooms, submit assignments, see teacher remarks, watch videos |
+| **Data Scholar** | `sophia.rodriguez@student.edumonitor.edu` | `student2@example.com` | `password123` | Data science courses, coursework submissions |
+| **Dean / Admin** | `admin@edumonitor.edu` | `admin@example.com` | `password123` | Inspect all users, download PDF/CSV institutional reports |
 
 ---
 

@@ -39,6 +39,48 @@ app.register_blueprint(materials_bp)
 from sessions.realtime import register_socket_events
 register_socket_events(socketio)
 
+# ── Firebase Client Configuration Endpoint ────────────────────────
+@app.route('/api/config/firebase', methods=['GET'])
+def get_firebase_client_config():
+    """Exposes Firebase client initialization parameters if configured, without exposing private keys."""
+    import os, json
+    from config import USE_MOCK
+
+    api_key = os.getenv('FIREBASE_API_KEY', '')
+    project_id = os.getenv('FIREBASE_PROJECT_ID', '')
+
+    # If project_id not set in env, inspect key file if present
+    key_path = os.path.join(os.path.dirname(__file__), 'firebase_admin_key.json')
+    if not project_id and os.path.exists(key_path):
+        try:
+            with open(key_path, 'r', encoding='utf-8') as f:
+                kdata = json.load(f)
+                project_id = kdata.get('project_id', '')
+        except Exception:
+            pass
+
+    auth_domain = os.getenv('FIREBASE_AUTH_DOMAIN', f"{project_id}.firebaseapp.com" if project_id else "")
+    storage_bucket = os.getenv('FIREBASE_STORAGE_BUCKET', f"{project_id}.appspot.com" if project_id else "")
+    messaging_sender_id = os.getenv('FIREBASE_MESSAGING_SENDER_ID', '')
+    app_id = os.getenv('FIREBASE_APP_ID', '')
+
+    is_configured = bool(api_key and project_id and api_key != "YOUR_API_KEY")
+
+    return jsonify({
+        'configured': is_configured,
+        'projectId': project_id or None,
+        'mode': 'live' if not USE_MOCK else 'local',
+        'config': {
+            'apiKey': api_key,
+            'authDomain': auth_domain,
+            'projectId': project_id,
+            'storageBucket': storage_bucket,
+            'messagingSenderId': messaging_sender_id,
+            'appId': app_id,
+        } if is_configured else None
+    })
+
+
 # ── Serve SPA ─────────────────────────────────────────────────────
 @app.route('/')
 @app.route('/<path:path>')
